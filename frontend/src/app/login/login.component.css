@@ -1,16 +1,23 @@
+
+
 .login-container {
-  width: 400px;
-  height:300px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  width: 30%;
+  height:90%;
   margin: 100px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f4f3f3;
+  padding: 40px;
+  border-radius: 20px;
   text-align: center;
+  background-color: rgb(240, 240, 240);
 }
 
 .form-group {
-  margin-bottom: 15px;
+  text-align:left ;
+  margin-bottom: 30px;
+  margin-left: 40px;
+  font-size: 14px;
+  align-content:baseline;
 }
 
 input {
@@ -22,7 +29,7 @@ input {
 }
 
 .login-button {
-  width: 50%;
+  width: 20%;
   background-color: #007bff;
   color: white;
   padding: 10px;
