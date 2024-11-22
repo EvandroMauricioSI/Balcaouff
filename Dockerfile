@@ -5,15 +5,13 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY . /app
+COPY backend/requirements.txt .
 
-COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app app
-COPY run.py .
+COPY backend/app ./app
 
 EXPOSE 3000
 
-CMD ["python", "app/app.py"]
+CMD ["python", "backend/app.py"]

@@ -1,7 +1,7 @@
-# define the two containers
+# Define the two containers
 services:
   psql-db:
-    # pull the postgres image from DockerHub
+    # Pull the postgres image from DockerHub
     image: postgres:15.2
     container_name: psql-db
     environment:
@@ -13,15 +13,16 @@ services:
     volumes:
       - db-volume:/var/lib/postgresql/data
     healthcheck:
-      # used in flask container depends_on condition to wait for the DB to be ready
+      # Used in flask container depends_on condition to wait for the DB to be ready
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 20s
       retries: 5
 
   flask-backend:
-    build:
-      context: ./backend
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: flask-backend
     ports:
       - "3000:3000"
@@ -38,5 +39,5 @@ services:
       - ./backend:/app
 
 volumes:
-  # to persist the database tables
+  # To persist the database tables
   db-volume:
