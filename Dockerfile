@@ -10,8 +10,8 @@ COPY backend/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/app ./app
+COPY backend/ ./app
 
 EXPOSE 3000
 
-CMD ["python", "backend/app.py"]
+CMD ["python", "app.py"]
