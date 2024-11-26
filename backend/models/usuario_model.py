@@ -1,10 +1,12 @@
-from ..extensions import db
+# from ..extensions import db
+from ..app import db
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
 
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, nullable=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
 
-    def __str__(self):
-        return f"id {self.id}, key_id ({self.key_id}), registered on {self.created_at}, raw: {self.raw}"
+    def json(self):
+        return {'id': self.id,'username': self.username, 'email': self.email}
