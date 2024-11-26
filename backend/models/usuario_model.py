@@ -1,5 +1,5 @@
-# from ..extensions import db
-from ..app import db
+from extensions import db
+# from ..app import db
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
