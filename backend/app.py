@@ -12,15 +12,13 @@ load_dotenv()
 # namespaces das rotas
 from routes.hello_routes import hello_ns
 
-# # models
+# models
 from models import usuario_model
 
 api = Api()
 
-# db = SQLAlchemy()
 app = Flask(__name__)
 
-print("aaaaaaaaaa", os.getenv('DATABASE_URL'))
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
 api.add_namespace(hello_ns)
