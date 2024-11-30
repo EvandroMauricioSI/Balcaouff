@@ -55,6 +55,9 @@ body {
   position: fixed;
   right: 100%;
 }
+.jasmine_html-reporter .jasmine-version {
+  color: #aaa;
+}
 .jasmine_html-reporter .jasmine-banner {
   margin-top: 14px;
 }
@@ -166,11 +169,10 @@ body {
 }
 .jasmine_html-reporter .jasmine-bar.jasmine-menu {
   background-color: #fff;
-  color: #000;
+  color: #aaa;
 }
 .jasmine_html-reporter .jasmine-bar.jasmine-menu a {
-  color: blue;
-  text-decoration: underline;
+  color: #333;
 }
 .jasmine_html-reporter .jasmine-bar a {
   color: white;
@@ -295,7 +297,4 @@ body {
 }
 .jasmine_html-reporter .jasmine-debug-log table, .jasmine_html-reporter .jasmine-debug-log th, .jasmine_html-reporter .jasmine-debug-log td {
   border: 1px solid #ddd;
-}
-.jasmine_html-reporter .jasmine-debug-log .jasmine-debug-log-msg {
-  white-space: pre;
 }

@@ -1,6 +1,5 @@
 /*
-Copyright (c) 2008-2019 Pivotal Labs
-Copyright (c) 2008-2024 The Jasmine developers
+Copyright (c) 2008-2022 Pivotal Labs
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -463,11 +462,7 @@ jasmineRequire.HtmlReporter = function(j$) {
             'tr',
             {},
             createDom('td', {}, entry.timestamp.toString()),
-            createDom(
-              'td',
-              { className: 'jasmine-debug-log-msg' },
-              entry.message
-            )
+            createDom('td', {}, entry.message)
           )
         );
       });
@@ -535,13 +530,14 @@ jasmineRequire.HtmlReporter = function(j$) {
           if (noExpectations(resultNode.result)) {
             specDescription = 'SPEC HAS NO EXPECTATIONS ' + specDescription;
           }
-          if (resultNode.result.status === 'pending') {
-            if (resultNode.result.pendingReason !== '') {
-              specDescription +=
-                ' PENDING WITH MESSAGE: ' + resultNode.result.pendingReason;
-            } else {
-              specDescription += ' PENDING';
-            }
+          if (
+            resultNode.result.status === 'pending' &&
+            resultNode.result.pendingReason !== ''
+          ) {
+            specDescription =
+              specDescription +
+              ' PENDING WITH MESSAGE: ' +
+              resultNode.result.pendingReason;
           }
           specListNode.appendChild(
             createDom(

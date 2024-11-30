@@ -1,0 +1,51 @@
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.botao-transacoes{
+  color: white!important;
+  background-color: rgb(1, 138, 192)!important;
+}
+
+.botao-dashboard{
+  color: white!important;
+  background-color: rgb(224, 200, 17)!important;
+}
+
+.botao-cadastro{
+  color: white!important;
+  background-color: rgb(35, 161, 62)!important;
+}
+
+.botao-sair{
+  color: white!important;
+  background-color: rgb(255, 0, 0)!important;
+}
+
+.example-card {
+  max-width: 350px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
