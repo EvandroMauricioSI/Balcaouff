@@ -1,7 +1,7 @@
-# Define the two containers
+version: "3"
+
 services:
   psql-db:
-    # Pull the postgres image from DockerHub
     image: postgres:15.2
     container_name: psql-db
     environment:
@@ -13,13 +13,14 @@ services:
     volumes:
       - db-volume:/var/lib/postgresql/data
     healthcheck:
-      # Used in flask container depends_on condition to wait for the DB to be ready
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 20s
       retries: 5
     env_file:
       - .env
+    networks:
+      - app-network  # Conectando o psql-db à rede app-network
 
   flask-backend:
     build: 
@@ -40,7 +41,21 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
       - ./backend:/app
+    networks:
+      - app-network  # Conectando o flask-backend à rede app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network  # Conectando o frontend à rede app-network
 
 volumes:
-  # To persist the database tables
   db-volume:
+
+networks:
+  app-network:
+    driver: bridge
