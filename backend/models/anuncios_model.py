@@ -1,15 +1,34 @@
 from extensions import db
 # from ..app import db
 
+
 class Anuncio(db.Model):
     __tablename__ = 'anuncios'
 
-    # id = db.Column(db.Integer, primary_key=True)
-    # username = db.Column(db.String(80), unique=True, nullable=False)
-    # nome = db.Column(db.String(100), nullable=False)
-    # sobrenome = db.Column(db.String(100), nullable=False)
-    # email = db.Column(db.String(120), unique=True, nullable=False)
+    id_anuncio = db.Column(db.Integer, primary_key=True)
+    tipo = db.Column(db.String(255), nullable=False)
+    descricao = db.Column(db.String(255), nullable=False)
+    preco = db.Column(db.Float, nullable=False)
+    foto = db.Column(db.String(255), nullable=True)
+    categoria = db.Column(db.Integer, db.ForeignKey('categoria.id_categoria'), nullable=False)
+    condicao_produto = db.Column(db.String(255), nullable=False)
+    avaliacao = db.Column(db.Integer, nullable=True)
+    anunciante = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    comprador = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=True)
+    local = db.Column(db.Integer, db.ForeignKey('localizacao.id_localizacao'), nullable=False)
 
     def json(self):
-        pass
-        # return {'id': self.id,'username': self.username, 'email': self.email}
+        return {
+            'id_anuncio': self.id_anuncio,
+            'tipo': self.tipo,
+            'descricao': self.descricao,
+            'preco': self.preco,
+            'foto': self.foto,
+            'categoria': self.categoria,
+            'condicao_produto': self.condicao_produto,
+            'avaliacao': self.avaliacao,
+            'anunciante': self.anunciante,
+            'comprador': self.comprador,
+            'local': self.local
+        }
+

@@ -5,15 +5,21 @@ from flask import Flask
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 
+# namespaces das rotas
+from routes.hello_routes import hello_ns
+
+# Importar todos os models
+from models.anuncios_model import Anuncio
+from models.usuario_model import Usuario
+from models.localizacao_model import Localizacao
+from models.categoria_model import Categoria
+
 from extensions import db
 
 load_dotenv()
 
-# namespaces das rotas
-from routes.hello_routes import hello_ns
 
-# models
-from models import usuario_model
+
 
 api = Api()
 
