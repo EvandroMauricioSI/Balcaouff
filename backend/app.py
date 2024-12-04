@@ -12,20 +12,18 @@ from routes.hello_routes import hello_ns
 from models.anuncios_model import Anuncio
 from models.usuario_model import Usuario
 from models.localizacao_model import Localizacao
-from models.categoria_model import Categoria
+from models.categorias_model import Categoria
 
 from extensions import db
 
 load_dotenv()
 
 
-
-
 api = Api()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
 api.add_namespace(hello_ns)
 
@@ -39,5 +37,5 @@ try:
 except Exception as e:
     print(f"Erro ao criar as tabelas: {e}")
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)
