@@ -18,6 +18,12 @@ from extensions import db
 
 load_dotenv()
 
+# namespaces das rotas
+from routes.hello_routes import hello_ns
+from routes.usuarios_routes import usuarios_ns
+
+# models
+from models import usuario_model
 
 api = Api()
 
@@ -25,7 +31,9 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
+# adicionando namespaces
 api.add_namespace(hello_ns)
+api.add_namespace(usuarios_ns)
 
 api.init_app(app)
 db.init_app(app)
