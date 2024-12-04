@@ -27,7 +27,6 @@ class UsuarioResource(Resource):
         senha = data.get("senha")
 
         response = usuarios_controller.cadastrar_usuario(nome, email, senha)
-        
         return response
     
     @usuarios_ns.doc(
@@ -36,3 +35,22 @@ class UsuarioResource(Resource):
     def get(self):
         id_usuario = request.args.get("id", default=None, type=int)
         return usuarios_controller.listar_usuarios(id_usuario)
+
+@usuarios_ns.route("/<int:id_usuario>", methods=["PUT"])
+class UsuarioUpdateResource(Resource):
+    
+    @usuarios_ns.doc(
+        description="Atualiza os dados de um usuario específico dado um ID",
+        body=usuario_model
+    )
+    def put(self, id_usuario):
+        data = request.get_json()
+        if not data:
+            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
+
+        nome = data.get("nome")
+        email = data.get("email")
+        senha = data.get("senha")
+
+        response = usuarios_controller.atualizar_usuario(id_usuario, nome, email, senha)
+        return response
