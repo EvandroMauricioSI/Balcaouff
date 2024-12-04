@@ -2,7 +2,6 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 from controller import anuncios_controller
 
-anuncio_ns = Namespace("anuncios")
 
 
 anuncios_ns = Namespace("anuncios")
@@ -57,7 +56,7 @@ class AnuncioResource(Resource):
         description="Captura todos os anúncios ou um específico, dependendo do ID fornecido."
     )
     def get(self):
-        id_anuncio = request.args.get("id", default=None, type=int)
+        id_anuncio = request.args.get("id_anuncio", default=None, type=int)
         return anuncios_controller.listar_anuncios(id_anuncio)
 
 

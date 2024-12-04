@@ -1,4 +1,4 @@
-from models import Anuncio
+from models.anuncios_model import Anuncio
 from extensions import db
 
 
