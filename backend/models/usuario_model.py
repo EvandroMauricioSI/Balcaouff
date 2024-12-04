@@ -14,5 +14,10 @@ class Usuario(db.Model):
         self.email = email
         self.senha = senha
 
-    # def json(self):
-    #     return {'id': self.id,'username': self.username, 'email': self.email}
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome,
+            'email': self.email,
+            'senha': self.senha
+        }
