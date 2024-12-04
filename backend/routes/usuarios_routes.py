@@ -10,7 +10,7 @@ usuario_model = usuarios_ns.model('Usuario', {
     'senha': fields.String(required=True, description="Senha do usuário")
 })
 
-@usuarios_ns.route("/", methods=["POST"])
+@usuarios_ns.route("/", methods=["POST", "GET"])
 class UsuarioResource(Resource):
     
     @usuarios_ns.doc(
@@ -19,14 +19,20 @@ class UsuarioResource(Resource):
     )
     def post(self):
         data = request.get_json()
-
         if not data:
-            return {"message": "Conteúdo da requisição não é JSON ou está vazio!"}, 400
+            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
         
         nome = data.get("nome")
         email = data.get("email")
         senha = data.get("senha")
 
-        response, status_code = usuarios_controller.cadastrar_usuario(nome, email, senha)
+        response = usuarios_controller.cadastrar_usuario(nome, email, senha)
         
-        return response, status_code
+        return response
+    
+    @usuarios_ns.doc(
+        description = "Captura dados de usuários, se tiver usuario_id, captura dados de um usuario especifico"
+    )
+    def get(self):
+        id_usuario = request.args.get("id", default=None, type=int)
+        return usuarios_controller.listar_usuarios(id_usuario)
