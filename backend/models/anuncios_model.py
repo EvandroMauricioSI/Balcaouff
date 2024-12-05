@@ -6,18 +6,18 @@ from extensions import db
 class Anuncio(db.Model):
     __tablename__ = "anuncios"
 
-    id_anuncio = db.Column(db.Integer, primary_key=True)
+    id_anuncio = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tipo = db.Column(db.String(255), nullable=False)
     descricao = db.Column(db.String(255), nullable=False)
     preco = db.Column(db.Float, nullable=False)
     foto = db.Column(db.String(255), nullable=True)
     categoria = db.Column(
-        db.Integer, db.ForeignKey("categoria.id_categoria"), nullable=False
+        db.Integer, db.ForeignKey("categorias.id_categoria"), nullable=False
     )
     condicao_produto = db.Column(db.String(255), nullable=False)
     avaliacao = db.Column(db.Integer, nullable=True)
-    anunciante = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=False)
-    comprador = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=True)
+    anunciante = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=False)
+    comprador = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=True)
     local = db.Column(
         db.Integer, db.ForeignKey("localizacao.id_localizacao"), nullable=False
     )
