@@ -36,7 +36,7 @@ class UsuarioResource(Resource):
         id_usuario = request.args.get("id", default=None, type=int)
         return usuarios_controller.listar_usuarios(id_usuario)
 
-@usuarios_ns.route("/<int:id_usuario>", methods=["PUT"])
+@usuarios_ns.route("/<int:id_usuario>", methods=["PUT", "DELETE"])
 class UsuarioUpdateResource(Resource):
     
     @usuarios_ns.doc(
@@ -53,4 +53,11 @@ class UsuarioUpdateResource(Resource):
         senha = data.get("senha")
 
         response = usuarios_controller.atualizar_usuario(id_usuario, nome, email, senha)
+        return response
+    
+    @usuarios_ns.doc(
+        description="Remover um usuario específico dado um ID",
+    )
+    def delete(self, id_usuario):
+        response = usuarios_controller.remover_usuario(id_usuario)
         return response

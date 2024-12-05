@@ -32,7 +32,7 @@ def listar_usuarios(id_usuario=None):
             return {"success": False, "message": "Usuário não encontrado!"}
     else:
         usuarios = Usuario.query.all()
-        return {"success": True, "message":[usuario.to_dict() for usuario in usuarios]}
+        return {"success": True, "data":[usuario.to_dict() for usuario in usuarios]}
 
 
 def atualizar_usuario(id_usuario, nome_usuario, email_usuario, senha_usuario):
@@ -51,3 +51,18 @@ def atualizar_usuario(id_usuario, nome_usuario, email_usuario, senha_usuario):
     except Exception as e:
         db.session.rollback()
         return {"success": False, "message": f"Erro ao atualizar o usuário: {str(e)}"}
+    
+
+def remover_usuario(id_usario):
+    usuario = Usuario.query.get(id_usario)
+    if not usuario:
+        return {"success": False, "message": "Usuário não encontrado!"}
+    
+    try:
+        db.session.delete(usuario)
+        db.session.commit()
+        return {"success": True, "message": "Usuário removido com sucesso!"}
+    
+    except Exception as e:
+        db.session.rollback()
+        return {"success": False, "message": f"Erro ao remover o usuário: {str(e)}"}
