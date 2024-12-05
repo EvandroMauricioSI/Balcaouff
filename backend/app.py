@@ -12,7 +12,19 @@ from routes.categorias_routes import categorias_ns
 from routes.localizacao_routes import localizacao_ns
 from routes.usuarios_routes import usuarios_ns
 
-# adicionando namespaces
+load_dotenv()
+
+app = Flask(__name__)
+
+# Configuração do banco de dados
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+
+# Inicializando a API e o banco de dados
+api = Api()
+db.init_app(app)
+api.init_app(app)
+
+# Adicionando os namespaces corretamente
 api.add_namespace(hello_ns)
 api.add_namespace(usuarios_ns)
 api.add_namespace(anuncios_ns)
@@ -24,20 +36,6 @@ from models.anuncios_model import Anuncio
 from models.usuario_model import Usuario
 from models.localizacao_model import Localizacao
 from models.categorias_model import Categoria
-
-
-load_dotenv()
-
-api = Api()
-
-app = Flask(__name__)
-
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-
-
-
-api.init_app(app)
-db.init_app(app)
 
 try:
     with app.app_context():
