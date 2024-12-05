@@ -7,6 +7,13 @@ usuarios_ns = Namespace("usuarios")
 usuario_model = usuarios_ns.model('Usuario', {
     'nome': fields.String(required=True, description="Nome do usuário"),
     'email': fields.String(required=True, description="Email do usuário"),
+    'senha': fields.String(required=True, description="Senha do usuário"),
+    'ocupacao': fields.String(required=True, description="Ocupação do usuário"),
+    'telefone': fields.String(required=True, description="Telefone do usuário")
+})
+
+usuario_login_model = usuarios_ns.model('Usuario', {
+    'email': fields.String(required=True, description="Email do usuário"),
     'senha': fields.String(required=True, description="Senha do usuário")
 })
 
@@ -25,8 +32,10 @@ class UsuarioResource(Resource):
         nome = data.get("nome")
         email = data.get("email")
         senha = data.get("senha")
+        ocupacao = data.get("ocupacao")
+        telefone = data.get("telefone")
 
-        response = usuarios_controller.cadastrar_usuario(nome, email, senha)
+        response = usuarios_controller.cadastrar_usuario(nome, email, senha, ocupacao, telefone)
         return response
     
     @usuarios_ns.doc(
@@ -60,4 +69,22 @@ class UsuarioUpdateResource(Resource):
     )
     def delete(self, id_usuario):
         response = usuarios_controller.remover_usuario(id_usuario)
+        return response
+
+@usuarios_ns.route("/login", methods=["POST"])    
+class UsuarioResource(Resource):
+    
+    @usuarios_ns.doc(
+        description="Login de usuário",
+        body=usuario_login_model  
+    )
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
+        
+        nome = data.get("nome")
+        senha = data.get("senha")
+
+        response = usuarios_controller.login_usuario(nome, senha)
         return response

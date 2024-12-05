@@ -1,9 +1,11 @@
 from models.usuario_model import Usuario
 from extensions import db
 
-def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario):
-    if not nome_usuario or not email_usuario or not senha_usuario:
-        return {"success": False, "message": "Nome, email e senha são obrigatórios!"}
+from werkzeug.security import generate_password_hash, check_password_hash
+
+def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario, ocupacao_usuario, telefone_usuario):
+    if not nome_usuario or not email_usuario or not senha_usuario or not ocupacao_usuario or not telefone_usuario:
+        return {"success": False, "message": "Faltam campos obrigatórios!"}
     
     if Usuario.query.filter_by(email=email_usuario).first():
         return {"success": False, "message": "O email informado já está cadastrado!"}
@@ -11,7 +13,9 @@ def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario):
     usuario = Usuario(
         nome = nome_usuario,
         email = email_usuario,
-        senha = senha_usuario
+        senha = generate_password_hash(senha_usuario),
+        ocupacao = ocupacao_usuario,
+        telefone = telefone_usuario
     )
     try:
         db.session.add(usuario)
@@ -62,7 +66,22 @@ def remover_usuario(id_usario):
         db.session.delete(usuario)
         db.session.commit()
         return {"success": True, "message": "Usuário removido com sucesso!"}
-    
+       
     except Exception as e:
         db.session.rollback()
         return {"success": False, "message": f"Erro ao remover o usuário: {str(e)}"}
+    
+
+def login_usuario(email, senha):
+    if not email or not senha:
+        return {"success": False, "message": "Email e senha são obrigatórios!"}
+    
+    usuario = Usuario.query.filter_by(email=email).first() 
+    if not usuario:
+        return {"success": False, "message": "Email ou senha inválido!"}
+    
+    if not check_password_hash(usuario.senha, senha):
+        return {"success": False, "message": "Email ou senha inválido!"}
+    
+    return {"success": True, "message": f"Bem vindo, {usuario.nome}!"}
+    
