@@ -4,19 +4,21 @@
   </mat-grid-tile>
 </mat-grid-list>
 
+<button (click)="adicionaImagem()">add imagem</button>
+
 
 
 <mat-grid-list cols="12" rowHeight="600px" gutterSize="20px">
 <div *ngFor="let item of anuncios">
 
-    <mat-grid-tile colspan="3">
-      <mat-card class="example-card" appearance="outlined" (click)="abreAnuncio()">
+    <mat-grid-tile [colspan]='coluna'>
+      <mat-card class="example-card" appearance="outlined">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
+          <div mat-card-avatar class="example-header-image" (click)="abrePerfil()"></div>
           <mat-card-title>Shiba Inu</mat-card-title>
           <mat-card-subtitle>Dog Breed</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" (click)="abreAnuncio()">
         <mat-card-content>
           <p>
             The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.

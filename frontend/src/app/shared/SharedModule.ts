@@ -4,6 +4,8 @@ import { MaterialModule } from "../angular-material/material.module";
 import { DialogExcluirComponent } from "./component/dialogExcluir/dialogExcluir.component";
 import { NavegacaoComponent } from "../navegacao/navegacao.component";
 import { DialogGenericoComponent } from "./dialogGenerico/dialogGenerico.component";
+import { UploadArquivoComponent } from "./component/uploadArquivo/uploadArquivo.component";
+import { UploadArquivoTabelaComponent } from "./component/uploadArquivo/uploadArquivo-tabela/uploadArquivo-tabela.component";
 
 
 
@@ -11,6 +13,8 @@ import { DialogGenericoComponent } from "./dialogGenerico/dialogGenerico.compone
   declarations: [
     DialogExcluirComponent,
     DialogGenericoComponent,
+    UploadArquivoComponent,
+    UploadArquivoTabelaComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +22,9 @@ import { DialogGenericoComponent } from "./dialogGenerico/dialogGenerico.compone
   ],
   exports: [
     DialogExcluirComponent,
-    DialogGenericoComponent
+    DialogGenericoComponent,
+    UploadArquivoComponent,
+    UploadArquivoTabelaComponent
   ]
 })
 export class SharedModule {
