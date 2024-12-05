@@ -10,7 +10,7 @@ class Anuncio(db.Model):
     tipo = db.Column(db.String(255), nullable=False)
     descricao = db.Column(db.String(255), nullable=False)
     preco = db.Column(db.Float, nullable=False)
-    foto = db.Column(db.String(255), nullable=True)
+    foto = db.Column(db.String(20000), nullable=True)
     categoria = db.Column(
         db.Integer, db.ForeignKey("categorias.id_categoria"), nullable=False
     )
