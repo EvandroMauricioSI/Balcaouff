@@ -62,10 +62,10 @@ class LocalizacaoDetailResource(Resource):
                 "message": "Conteúdo da requisição não é JSON ou está vazio!",
             }, 400
 
-        response = localizacao_controller.atualizar_anuncio(id_localizacao, data)
+        response = localizacao_controller.atualizar_localizacao(id_localizacao, data)
         return response
 
     @localizacao_ns.doc(description="Exclui uma localização pelo ID.")
     def delete(self, id_localizacao):
-        response = localizacao_controller.deletar_anuncio(id_localizacao)
+        response = localizacao_controller.deletar_localizacao(id_localizacao)
         return response
