@@ -17,6 +17,7 @@ usuario_login_model = usuarios_ns.model('Usuario', {
     'senha': fields.String(required=True, description="Senha do usuário")
 })
 
+
 @usuarios_ns.route("/", methods=["POST", "GET"])
 class UsuarioResource(Resource):
     
