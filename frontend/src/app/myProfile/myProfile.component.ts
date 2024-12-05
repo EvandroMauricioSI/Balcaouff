@@ -1,5 +1,6 @@
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, INJECTOR, OnInit, Optional } from '@angular/core';
+import { Route, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-myProfile',
@@ -45,14 +46,16 @@ export class MyProfileComponent implements OnInit {
   currentIndex: number = 0;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) @Optional() public data: any = ''
+    @Inject(MAT_DIALOG_DATA) @Optional() public data: any = '',
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
   }
 
-  alert(){
-    window.alert('me viu')
+  editarPerfil() {
+    this.router.navigate(['12'], { relativeTo: this.route });
   }
 
   calculoRating(){
@@ -74,13 +77,13 @@ export class MyProfileComponent implements OnInit {
     if (this.currentIndex > 0) {
       this.currentIndex -= 1;
     } else {
-      this.currentIndex = Math.ceil(this.anuncios.length / 3) - 1;  // Vai para o último conjunto
+      this.currentIndex = Math.ceil(this.anuncios.length/3) - 1;  // Vai para o último conjunto
     }
     this.updateCarouselPosition();
   }
 
   moveRight() {
-    if (this.currentIndex < Math.ceil(this.anuncios.length / 3) - 1) {
+    if (this.currentIndex < Math.ceil(this.anuncios.length/3) - 1) {
       this.currentIndex += 1;
     } else {
       this.currentIndex = 0;  // Vai para o primeiro conjunto
@@ -90,7 +93,7 @@ export class MyProfileComponent implements OnInit {
 
   updateCarouselPosition() {
     const carousel = document.querySelector('.carousel') as HTMLElement;
-    const offset = -(this.currentIndex * 23);  // Desloca os itens para a esquerda em 100% por vez -> 23 e a porcentagem
+    const offset = -(this.currentIndex * 33);  // Desloca os itens para a esquerda em 100% por vez -> 23 e a porcentagem
     carousel.style.transform = `translateX(${offset}%)`;  // Aplica o deslocamento em % para cada conjunto
   }
 

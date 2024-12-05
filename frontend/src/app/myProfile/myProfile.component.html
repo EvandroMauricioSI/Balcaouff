@@ -3,9 +3,12 @@
     <mat-grid-list cols="12" rowHeight="150px" gutterSize="10px">
 
       <mat-grid-tile colspan="4" rowspan="2">
-        <div class="profile-card" (click)="alert()">
+        <div class="profile-card">
           <div class="image-container">
             <img src="https://tecoapple.com/wp-content/uploads/2019/05/clairobagsa019.jpg" alt="Foto do usuário" class="profile-image"/>
+            <div class="overlay" (click)="editarPerfil()" *ngIf="!visit">
+              <span class="edit-text">Editar perfil</span>
+            </div>
           </div>
         </div>
       </mat-grid-tile>
