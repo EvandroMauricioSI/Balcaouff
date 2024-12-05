@@ -1,0 +1,40 @@
+<div class="cdk-virtual-scroll-data-source-example">
+  <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+      <table mat-table [dataSource]="dados">
+
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> ARQUIVO </th>
+          <td mat-cell *matCellDef="let element">
+            <div style="font-size: 12px;display: relativa;align-items: center;">
+              <mat-icon style="font-size: 26px; align-items: bottom;">{{retornaIcone(element.extensao)}}</mat-icon> {{element.nomeArquivo}}
+            </div>
+            <img [src] = 'element.arquivo' style="display: cover;width:500px;height: 500px">
+          </td>
+        </ng-container>
+
+
+
+
+          <ng-container matColumnDef="editar">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                  <span class="mobile-label">
+                  </span>
+
+                  <button class="botaoexcluir" mat-icon-button (click)="remover(element.nomeArquivo)"
+                  matTooltip="Excluir Registro" matTooltipPosition="above">
+                  <mat-icon>cancel</mat-icon></button>
+
+                  </td>
+          </ng-container>
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+      </table>
+  </cdk-virtual-scroll-viewport>
+</div>
+
