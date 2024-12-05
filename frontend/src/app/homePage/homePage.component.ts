@@ -94,8 +94,8 @@ export class HomePageComponent implements OnInit {
 
   abrePerfil() {
     const dialogRef = this.dialog.open(MyProfileComponent, {
-      width: '500px',
-      height: '400px',
+      width: '1000px',
+      height: '600px',
       data: {
         dado: null,
         carregando: "display:none",
