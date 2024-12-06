@@ -26,10 +26,10 @@ api.init_app(app)
 
 # Adicionando os namespaces corretamente
 api.add_namespace(hello_ns)
-api.add_namespace(usuarios_ns)
-api.add_namespace(anuncios_ns)
-api.add_namespace(localizacao_ns)
-api.add_namespace(categorias_ns)
+api.add_namespace(usuarios_ns, path="/api/usuarios")
+api.add_namespace(anuncios_ns, path="/api/anuncios")
+api.add_namespace(localizacao_ns, path="/api/localizacao")
+api.add_namespace(categorias_ns, path="/api/categorias")
 
 # Importar todos os models
 from models.anuncios_model import Anuncio
