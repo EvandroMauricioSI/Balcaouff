@@ -4,8 +4,10 @@ from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario, ocupacao_usuario, telefone_usuario, foto_de_perfil_usuario):
-    if not nome_usuario or not email_usuario or not senha_usuario:
-        return {"success": False, "data": "Faltam campos obrigatórios!"}
+    # if not nome_usuario or not email_usuario or not senha_usuario:
+    #     return {"success": False, "data": "Faltam campos obrigatorios!"}
+    if not email_usuario or not senha_usuario:
+        return {"success": False, "data": "Faltam campos obrigatorios!"}
     
     if Usuario.query.filter_by(email=email_usuario).first():
         return {"success": False, "data": "O email informado já está cadastrado!"}

@@ -29,9 +29,12 @@ class UsuarioResource(Resource):
     def post(self):
         data = request.get_json()
         if not data:
-            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteudo da requisição nao e JSON ou esta vazio!"}
         
-        nome = data.get("nome")
+        # !!!!! MUDAR PARAMETROS DPS !!!!!
+
+        # nome = data.get("nome")
+        nome = None
         email = data.get("email")
         senha = data.get("senha")
         # ocupacao = data.get("ocupacao")
@@ -61,7 +64,7 @@ class UsuarioUpdateResource(Resource):
     def put(self, id_usuario):
         data = request.get_json()
         if not data:
-            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteúdo da requisição nao e JSON ou esta vazio!"}
 
         nome = data.get("nome")
         email = data.get("email")
@@ -87,7 +90,7 @@ class UsuarioResource(Resource):
     def post(self):
         data = request.get_json()
         if not data:
-            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteúdo da requisição nao e JSON ou esta vazio!"}
         
         nome = data.get("nome")
         senha = data.get("senha")
