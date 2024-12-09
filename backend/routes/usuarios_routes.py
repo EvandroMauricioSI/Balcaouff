@@ -7,7 +7,7 @@ usuarios_ns = Namespace("usuarios")
 usuario_model = usuarios_ns.model('Usuario', {
     'nome': fields.String(required=True, description="Nome do usuário"),
     'email': fields.String(required=True, description="Email do usuário"),
-    'senha': fields.String(required=True, description="Senha do usuário"),
+    'senha': fields.String(required=True, description="Senha do usuário")
     # 'ocupacao': fields.String(required=False, description="Ocupação do usuário"),
     # 'telefone': fields.String(required=False, description="Telefone do usuário"),
     # 'foto_de_perfil': fields.String(required=False, description="Foto de perfil do usuário")
@@ -24,7 +24,7 @@ class UsuarioResource(Resource):
     
     @usuarios_ns.doc(
         description="Cadastro de novo usuário",
-        body=usuario_model  
+        body=usuario_login_model  
     )
     def post(self):
         data = request.get_json()
@@ -33,16 +33,12 @@ class UsuarioResource(Resource):
         
         # !!!!! MUDAR PARAMETROS DPS !!!!!
 
-        # nome = data.get("nome")
-        nome = None
         email = data.get("email")
         senha = data.get("senha")
-        # ocupacao = data.get("ocupacao")
-        # telefone = data.get("telefone")
-        # foto_de_perfil = data.get("foto_de_perfil")
-        ocupacao = None
-        telefone = None
-        foto_de_perfil = None
+        nome = None # nome = data.get("nome")
+        ocupacao = None # nome = data.get("nome")
+        telefone = None # nome = data.get("nome")
+        foto_de_perfil = None # nome = data.get("nome")
 
         response = usuarios_controller.cadastrar_usuario(nome, email, senha, ocupacao, telefone, foto_de_perfil)
         return response
