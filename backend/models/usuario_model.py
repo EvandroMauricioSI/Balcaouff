@@ -10,8 +10,9 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
-    ocupacao = db.Column(db.String(100), nullable=False)
-    telefone = db.Column(db.String(100), nullable=False)
+    ocupacao = db.Column(db.String(100), nullable=True)
+    telefone = db.Column(db.String(100), nullable=True)
+    foto_de_perfil = db.Column(db.String(100), nullable=True)
 
     def __init__(self, nome=None, email=None, senha=None, ocupacao=None, telefone=None):
         self.nome = nome

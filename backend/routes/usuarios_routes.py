@@ -8,8 +8,9 @@ usuario_model = usuarios_ns.model('Usuario', {
     'nome': fields.String(required=True, description="Nome do usuário"),
     'email': fields.String(required=True, description="Email do usuário"),
     'senha': fields.String(required=True, description="Senha do usuário"),
-    'ocupacao': fields.String(required=True, description="Ocupação do usuário"),
-    'telefone': fields.String(required=True, description="Telefone do usuário")
+    # 'ocupacao': fields.String(required=False, description="Ocupação do usuário"),
+    # 'telefone': fields.String(required=False, description="Telefone do usuário"),
+    # 'foto_de_perfil': fields.String(required=False, description="Foto de perfil do usuário")
 })
 
 usuario_login_model = usuarios_ns.model('Usuario', {
@@ -28,15 +29,19 @@ class UsuarioResource(Resource):
     def post(self):
         data = request.get_json()
         if not data:
-            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
         
         nome = data.get("nome")
         email = data.get("email")
         senha = data.get("senha")
-        ocupacao = data.get("ocupacao")
-        telefone = data.get("telefone")
+        # ocupacao = data.get("ocupacao")
+        # telefone = data.get("telefone")
+        # foto_de_perfil = data.get("foto_de_perfil")
+        ocupacao = None
+        telefone = None
+        foto_de_perfil = None
 
-        response = usuarios_controller.cadastrar_usuario(nome, email, senha, ocupacao, telefone)
+        response = usuarios_controller.cadastrar_usuario(nome, email, senha, ocupacao, telefone, foto_de_perfil)
         return response
     
     @usuarios_ns.doc(
@@ -56,7 +61,7 @@ class UsuarioUpdateResource(Resource):
     def put(self, id_usuario):
         data = request.get_json()
         if not data:
-            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
 
         nome = data.get("nome")
         email = data.get("email")
@@ -82,7 +87,7 @@ class UsuarioResource(Resource):
     def post(self):
         data = request.get_json()
         if not data:
-            return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}
+            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}
         
         nome = data.get("nome")
         senha = data.get("senha")
