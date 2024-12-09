@@ -1,0 +1,192 @@
+.card-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.image-container {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* Responsividade para 1000px e 1200px */
+@media (max-width: 1200px) {
+  .card-container {
+    width: 90%; /* Ajusta a largura para 90% da tela */
+  }
+
+  .image-container {
+    width: 200px; /* Menor largura para imagem de perfil em telas menores */
+    height: 200px; /* Ajusta a altura para manter proporção */
+  }
+
+  .profile-header {
+    font-size: 70px; /* Menor tamanho de fonte */
+  }
+
+  .carousel-item {
+    flex: 0 0 30%; /* Ajusta o tamanho do item do carrossel */
+  }
+
+  .profile-info li {
+    font-size: 14px; /* Diminui o tamanho da fonte para telas menores */
+  }
+}
+
+@media (max-width: 1000px) {
+  .card-container {
+    width: 90%; /* Ajusta a largura ainda mais para telas menores */
+  }
+
+  .image-container {
+    width: 180px; /* Ajusta ainda mais o tamanho da imagem */
+    height: 180px;
+  }
+
+  .profile-header {
+    font-size: 60px; /* Tamanho de fonte ainda menor */
+  }
+
+  .carousel-item {
+    flex: 0 0 45%; /* Ajusta a largura do item do carrossel em telas ainda menores */
+  }
+
+  .profile-info li {
+    font-size: 12px; /* Menor tamanho de fonte para telas pequenas */
+  }
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.profile-header {
+  margin-right: 16px;
+  font-size: 80px;
+}
+
+.star-rating mat-icon {
+  color: #f39c12;
+}
+
+.star-rating span {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+/* Adicionando estilo para garantir alinhamento à esquerda na lista */
+.profile-info {
+  margin-left: 10px;
+  padding: 0;
+  list-style-type: none; /* Remove o marcador padrão */
+  text-align: left; /* Garante que o texto da lista fique alinhado à esquerda */
+}
+
+.profile-info li {
+  font-size: 16px;
+  margin-bottom: 8px; /* Espaçamento entre os itens da lista */
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;  /* Alinha os itens do carrossel à direita */
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  flex: 0 0 23%;  /* Cada item ocupa 33% da largura do contêiner */
+  box-sizing: border-box;  /* Inclui padding e bordas no cálculo da largura */
+  margin: 0 5px;  /* Espaçamento entre os itens */
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 10;
+}
+
+.carousel-button.left {
+  left: 10px;
+}
+
+.carousel-button.right {
+  right: 10px;
+}
+
+
+.example-card {
+  max-width: 350px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.description-content {
+  overflow: hidden;
+  font-size: 16px;
+  height: 110px;
+  line-height: 20px;
+}
+
+.profile-card {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.7); /* Cinza fosco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.edit-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
