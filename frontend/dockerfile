@@ -29,7 +29,7 @@ COPY --from=build /app/dist/balcaouff /usr/share/nginx/html
 COPY frontend/nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta 80 (NGINX)
-EXPOSE 80
+EXPOSE 3070
 
 # Comando para rodar o NGINX
 CMD ["nginx", "-g", "daemon off;"]
