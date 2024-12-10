@@ -61,7 +61,7 @@ export class MyProfileEditComponent implements OnInit {
       const extensao = this.retornaExtensao(file.name)
       console.log(extensao?.toLowerCase())
 
-      if (file.size > 5000000) {
+      if (file.size > 1000000) {
         this.toast.error(`Arquivo deve ser menor do que 5MB - ${file.name}`);
       }
       else if(extensao?.toLowerCase() != 'jpg' && extensao?.toLowerCase() != 'png' && extensao?.toLowerCase() != 'jpeg'){

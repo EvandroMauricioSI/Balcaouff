@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       login: [null, [Validators.required, this.emailValidator()]],
       senha: [null, [Validators.required]],
       senha2: [null],
-      usuario: [null]
+      //usuario: [null]
     }, {
       validators: [comparaSenhas()]
     });
@@ -70,12 +70,12 @@ export class LoginComponent implements OnInit {
     this.acao = "Registro"
 
     const validaSenha = this.formLogin.get('senha2');
-    const usuario = this.formLogin.get('usuario');
+    //const usuario = this.formLogin.get('usuario');
 
     validaSenha?.setValidators([Validators.required]);
     validaSenha?.updateValueAndValidity();
-    usuario?.setValidators([Validators.required]);
-    usuario?.updateValueAndValidity();
+    //usuario?.setValidators([Validators.required]);
+    //usuario?.updateValueAndValidity();
 
   }
 
@@ -89,8 +89,8 @@ export class LoginComponent implements OnInit {
     this.acao = "Login"
     validaSenha?.clearValidators()
     validaSenha?.updateValueAndValidity()
-    usuario?.clearValidators()
-    usuario?.updateValueAndValidity()
+    //usuario?.clearValidators()
+    //usuario?.updateValueAndValidity()
   }
 
   checaForm(){
@@ -131,18 +131,18 @@ export class LoginComponent implements OnInit {
 
   enviarDados() {
     const formulario: Usuario = {
-      username: this.formLogin.get('login')?.value,
-      password: this.formLogin.get('senha')?.value
+      email: this.formLogin.get('login')?.value,
+      senha: this.formLogin.get('senha')?.value
     }
 
     if(this.cadastro){
 
       const validaSenha = this.formLogin.get('senha2')
 
-      /*this.conexaoAPI$ = this.service.cadastrarUsuario(formulario).subscribe(
+      this.conexaoAPI$ = this.service.cadastrarUsuario(formulario).subscribe(
         (dado) => {
           console.log('Resposta: ', dado)
-          //this.toast.info(dado)
+          this.toast.success('Usuário Cadastrado com sucesso!')
           this.formLogin.reset()
           this.formLogin.markAsPristine()
           this.cadastro = false
@@ -150,18 +150,18 @@ export class LoginComponent implements OnInit {
           validaSenha?.clearValidators()
           validaSenha?.updateValueAndValidity()
         }
-      )*/
+      )
 
     }else{
       console.log('f', formulario)
 
-      /*this.conexaoAPI$ = this.service.loginUsuario(formulario).subscribe({
+      this.conexaoAPI$ = this.service.loginUsuario(formulario).subscribe({
         next: (dado) => {
           console.log('Resposta: ', dado)
-          localStorage.setItem('usuario', JSON.stringify(formulario.username))
+          localStorage.setItem('usuario', JSON.stringify(dado))
           this.router.navigate(['/'])
         }
-      })*/
+      })
     }
   }
 
