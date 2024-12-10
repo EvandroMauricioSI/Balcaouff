@@ -49,7 +49,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
     ports:
-      - "80:80"
+      - "3070:3070"
     networks:
       - app-network  # Conectando o frontend à rede app-network
 

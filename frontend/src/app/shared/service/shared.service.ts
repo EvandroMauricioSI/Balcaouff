@@ -14,8 +14,8 @@ constructor(
 ) { }
 
 
-  /*cadastrarUsuario(formulario:Usuario){
-    return this.http.post(`/api/users/register`, formulario, { responseType: 'text' })
+  cadastrarUsuario(formulario:Usuario){
+    return this.http.post(`/api/usuarios/`, formulario) //, { responseType: 'text' }
     .pipe(
       map((val) => val),
       take(1)
@@ -25,7 +25,7 @@ constructor(
   loginUsuario(formulario:Usuario){
     console.log('shared service')
     console.log(formulario)
-    return this.http.post(`/api/users/login`, formulario)
+    return this.http.post(`/api/usuarios/login`, formulario)
     .pipe(
       map((val) => val),
       take(1)
@@ -35,6 +35,8 @@ constructor(
   obterUsuario(){
     const user = localStorage.getItem('usuario')
     return JSON.parse(user!)
-  }*/
+  }
 
 }
+
+

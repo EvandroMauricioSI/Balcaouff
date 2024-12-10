@@ -1,5 +1,5 @@
 # Etapa 1: Construir a aplicação Angular
-FROM node:16 AS build
+FROM node:20 AS build
 
 # Definir o diretório de trabalho no container
 WORKDIR /app
@@ -7,14 +7,17 @@ WORKDIR /app
 # Copiar os arquivos package.json e package-lock.json
 COPY frontend/package*.json ./
 
-# Instalar as dependências do Angular
+# Instalar o Angular CLI globalmente
+RUN npm install -g @angular/cli
+
+# Instalar as dependências do projeto (inclui o Angular CLI se necessário)
 RUN npm install
 
 # Copiar o restante do código da aplicação
 COPY frontend/ ./
 
 # Criar o build da aplicação Angular
-RUN npm run build --prod
+RUN ng build
 
 # Etapa 2: Servir a aplicação com um servidor NGINX
 FROM nginx:alpine
@@ -26,8 +29,7 @@ COPY --from=build /app/dist/balcaouff /usr/share/nginx/html
 COPY frontend/nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta 80 (NGINX)
-EXPOSE 80
+EXPOSE 3070
 
 # Comando para rodar o NGINX
 CMD ["nginx", "-g", "daemon off;"]
-
