@@ -5,10 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario, ocupacao_usuario, telefone_usuario, foto_de_perfil_usuario):
     if not email_usuario or not senha_usuario:
-        return {"success": False, "data": "Faltam campos obrigatorios!"}
+        return {"success": False, "data": "Faltam campos obrigatorios!"},400
     
     if Usuario.query.filter_by(email=email_usuario).first():
-        return {"success": False, "data": "O email informado já está cadastrado!"}
+        return {"success": False, "data": "O email informado já está cadastrado!"},400
     
     usuario = Usuario(
         nome = nome_usuario,
@@ -21,11 +21,11 @@ def cadastrar_usuario(nome_usuario, email_usuario, senha_usuario, ocupacao_usuar
     try:
         db.session.add(usuario)
         db.session.commit()
-        return {"success": True, "data": "Usuário cadastrado com sucesso!"}
+        return {"success": True, "data": "Usuário cadastrado com sucesso!"},200
 
     except Exception as e:
         db.session.rollback()  
-        return {"success": False, "data": f"Erro ao cadastrar o usuário: {str(e)}"}
+        return {"success": False, "data": f"Erro ao cadastrar o usuário: {str(e)}"},400
 
 
 def listar_usuarios(id_usuario=None):
@@ -34,7 +34,7 @@ def listar_usuarios(id_usuario=None):
         if usuario:
             return {"success": True, "data": usuario.to_dict()}
         else:
-            return {"success": False, "data": "Usuário não encontrado!"}
+            return {"success": False, "data": "Usuário não encontrado!"},400
     else:
         usuarios = Usuario.query.all()
         return {"success": True, "data":[usuario.to_dict() for usuario in usuarios]}
@@ -44,45 +44,46 @@ def atualizar_usuario(id_usuario, nome_usuario, email_usuario, senha_usuario):
     usuario = Usuario.query.filter_by(id=id_usuario).first()
 
     if not usuario:
-        return {"success": False, "data": "Usuário não encontrado!"}
+        return {"success": False, "data": "Usuário não encontrado!"},400
     
     if nome_usuario: usuario.nome = nome_usuario
     if email_usuario: usuario.email = email_usuario
     if senha_usuario: usuario.senha = senha_usuario
     try:
         db.session.commit()
-        return {"success": True, "data": "Usuário atualizado com sucesso!"}
+        return {"success": True, "data": "Usuário atualizado com sucesso!"},200
     
     except Exception as e:
         db.session.rollback()
-        return {"success": False, "data": f"Erro ao atualizar o usuário: {str(e)}"}
+        return {"success": False, "data": f"Erro ao atualizar o usuário: {str(e)}"},400
     
 
 def remover_usuario(id_usario):
     usuario = Usuario.query.get(id_usario)
     if not usuario:
-        return {"success": False, "data": "Usuário não encontrado!"}
+        return {"success": False, "data": "Usuário não encontrado!"},400
     
     try:
         db.session.delete(usuario)
         db.session.commit()
-        return {"success": True, "data": "Usuário removido com sucesso!"}
+        return {"success": True, "data": "Usuário removido com sucesso!"},200
        
     except Exception as e:
         db.session.rollback()
-        return {"success": False, "data": f"Erro ao remover o usuário: {str(e)}"}
+        return {"success": False, "data": f"Erro ao remover o usuário: {str(e)}"},400
     
 
 def login_usuario(email, senha):
     if not email or not senha:
-        return {"success": False, "data": "Email e senha são obrigatórios!"}
+        return {"success": False, "data": "Email e senha são obrigatórios!"},400
     
     usuario = Usuario.query.filter_by(email=email).first() 
     if not usuario:
-        return {"success": False, "data": "Email ou senha inválido!"}
+        return {"success": False, "data": "Email ou senha inválido!"},400
     
     if not check_password_hash(usuario.senha, senha):
-        return {"success": False, "data": "Email ou senha inválido!"}
+        return {"success": False, "data": "Email ou senha inválido!"},400
     
-    return {"success": True, "data": f"Bem vindo, {usuario.nome}!"}
+    return {"success": True, "data": f"Bem vindo, {usuario.nome if usuario.nome else 'novo usuario'}!"}, 200
+
     

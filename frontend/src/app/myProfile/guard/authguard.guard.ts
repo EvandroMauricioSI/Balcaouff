@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
     if (user) {
       this.permissao = JSON.parse(user)
-      if(this.permissao.nome == 'Lucas'){ //GUARDAR A ROTA PELO ID DO MELIANTE
+      if(this.permissao.data == 'Bem vindo, novo usuario!'){ //GUARDAR A ROTA PELO ID DO MELIANTE
         return true;
       } else {
         this.router.navigate(['/perfil']);
