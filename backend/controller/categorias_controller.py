@@ -2,11 +2,11 @@ from models.categorias_model import Categoria
 from extensions import db
 
 
-def format_response(success, message=None, data=None, status_code=200):
+def format_response(success, data=None, status_code=200):
     """
     Formata o retorno das funções de forma consistente.
     """
-    return {"success": success, "message": message, "data": data}, status_code
+    return {"success": success, "data": data}, status_code
 
 
 def cadastrar_categoria(nome_categoria):
@@ -67,7 +67,6 @@ def atualizar_categoria(id_categoria, novo_nome):
         db.session.commit()
         return format_response(
             True,
-            "Categoria atualizada com sucesso!",
             data=categoria.to_dict(),
         )
     except Exception as e:
