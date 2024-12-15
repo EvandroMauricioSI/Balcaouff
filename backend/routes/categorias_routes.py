@@ -21,7 +21,7 @@ class CategoriaResource(Resource):
         if not data:
             return {
                 "success": False,
-                "message": "Conteúdo da requisição não é JSON ou está vazio!",
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
             }
 
         nome = data.get("nome")
@@ -49,7 +49,7 @@ class CategoriaDetailResource(Resource):
         if not data:
             return {
                 "success": False,
-                "message": "Conteúdo da requisição não é JSON ou está vazio!",
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
             }, 400
 
         novo_nome = data.get("nome")
