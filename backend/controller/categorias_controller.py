@@ -24,7 +24,6 @@ def cadastrar_categoria(nome_categoria):
         db.session.commit()
         return format_response(
             True,
-            "Categoria cadastrada com sucesso!",
             data=categoria.to_dict(),
             status_code=201,
         )

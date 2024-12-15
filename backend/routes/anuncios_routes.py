@@ -19,7 +19,7 @@ anuncio_model = anuncios_ns.model(
         ),
         "avaliacao": fields.Integer(description="Avaliação do produto ou serviço"),
         "anunciante": fields.Integer(required=True, description="ID do anunciante"),
-        "comprador": fields.Integer(description="ID do comprador"),
+        "comprador": fields.Integer(description="ID do comprador, pode ser Nulo"),
         "local": fields.Integer(required=True, description="ID da localização"),
     },
 )
@@ -34,7 +34,7 @@ class AnuncioResource(Resource):
         if not data:
             return {
                 "success": False,
-                "message": "Conteúdo da requisição não é JSON ou está vazio!",
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
             }, 400
 
         tipo = data.get("tipo")
@@ -45,7 +45,7 @@ class AnuncioResource(Resource):
         condicao_produto = data.get("condicao_produto")
         avaliacao = data.get("avaliacao")
         anunciante = data.get("anunciante")
-        comprador = data.get("comprador")
+        comprador = None  # data.get("comprador") - Isso inicialmente é definido depois.
         local = data.get("local")
 
         # Chamar o controlador para criar um novo anúncio
@@ -72,22 +72,22 @@ class AnuncioResource(Resource):
         return anuncios_controller.listar_anuncios(id_anuncio)
 
 
-# @anuncios_ns.route("/<int:id_anuncio>", methods=["PUT", "DELETE"])
-# class AnuncioDetailResource(Resource):
+@anuncios_ns.route("/<int:id_anuncio>", methods=["PUT", "DELETE"])
+class AnuncioDetailResource(Resource):
 
-#     @anuncios_ns.doc(
-#         description="Atualiza um anúncio existente",
-#         body=anuncio_model
-#     )
-#     def put(self, id_anuncio):
-#         data = request.get_json()
-#         if not data:
-#             return {"success": False, "message": "Conteúdo da requisição não é JSON ou está vazio!"}, 400
+    @anuncios_ns.doc(description="Atualiza um anúncio existente", body=anuncio_model)
+    def put(self, id_anuncio):
+        data = request.get_json()
+        if not data:
+            return {
+                "success": False,
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
+            }, 400
 
-#         response = anuncios_controller.atualizar_anuncio(id_anuncio, data)
-#         return response
+        response = anuncios_controller.atualizar_anuncio(id_anuncio, data)
+        return response
 
-#     @anuncios_ns.doc(description="Exclui um anúncio pelo ID.")
-#     def delete(self, id_anuncio):
-#         response = anuncios_controller.deletar_anuncio(id_anuncio)
-#         return response
+    @anuncios_ns.doc(description="Exclui um anúncio pelo ID.")
+    def delete(self, id_anuncio):
+        response = anuncios_controller.deletar_anuncio(id_anuncio)
+        return response

@@ -28,7 +28,7 @@ class LocalizacaoResource(Resource):
         if not data:
             return {
                 "success": False,
-                "message": "Conteúdo da requisição não é JSON ou está vazio!",
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
             }, 400
 
         bairro = data.get("bairro")
@@ -59,7 +59,7 @@ class LocalizacaoDetailResource(Resource):
         if not data:
             return {
                 "success": False,
-                "message": "Conteúdo da requisição não é JSON ou está vazio!",
+                "data": "Conteúdo da requisição não é JSON ou está vazio!",
             }, 400
 
         response = localizacao_controller.atualizar_localizacao(id_localizacao, data)
