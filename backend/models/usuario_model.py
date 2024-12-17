@@ -10,18 +10,29 @@ class Usuario(db.Model):
     ocupacao = db.Column(db.String(100), nullable=True)
     telefone = db.Column(db.String(100), nullable=True)
     foto_de_perfil = db.Column(db.String(100), nullable=True)
+    admin = db.Column(db.Boolean, nullable=True)
 
-    def __init__(self, nome=None, email=None, senha=None, ocupacao=None, telefone=None, foto_de_perfil=None):
+    def __init__(self, 
+                 nome=None, 
+                 email=None, 
+                 senha=None, 
+                 ocupacao=None, 
+                 telefone=None, 
+                 foto_de_perfil=None,
+                 admin=False):
         self.email = email
         self.senha = senha
-        # self.nome = nome
-        # self.ocupacao = ocupacao
-        # self.telefone = telefone
-        # self.foto_de_perfil = foto_de_perfil
+        self.nome = nome
+        self.ocupacao = ocupacao
+        self.telefone = telefone
+        self.foto_de_perfil = foto_de_perfil
+        self.admin = admin
+
 
     def to_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
-            'email': self.email
+            'email': self.email,
+            'telefone': self.telefone,
         }
