@@ -73,19 +73,6 @@ def remover_usuario(id_usario):
         return {"success": False, "data": f"Erro ao remover o usuário: {str(e)}"},400
     
 
-def login_usuario(email, senha):
-    if not email or not senha:
-        return {"success": False, "data": "Email e senha são obrigatórios!"},400
-    
-    usuario = Usuario.query.filter_by(email=email).first() 
-    if not usuario:
-        return {"success": False, "data": "Email ou senha inválido!"},400
-    
-    if not check_password_hash(usuario.senha, senha):
-        return {"success": False, "data": "Email ou senha inválido!"},400
-    
-    return {"success": True, "data": f"Bem vindo, {usuario.nome if usuario.nome else 'novo usuario'}!"}, 200
-
 def usuario_por_email(email):
     try:
         return Usuario.query.filter_by(email = email).first() 

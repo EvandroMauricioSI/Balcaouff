@@ -24,10 +24,17 @@ usuario_login_model = usuarios_ns.model(
     },
 )
 
-@usuarios_ns.route("/auth", methods=["POST", "GET"]) # login
+@usuarios_ns.route("/login", methods=["POST", "GET"]) # login
 class UsuarioAuth(Resource):
+    @usuarios_ns.doc(
+        description = "Retorno de Token",
+        body=usuario_login_model
+    )
     def post(self):
-        return helper.auth()
+        data = request.get_json()
+        email = data.get("email")
+        senha = data.get("senha")
+        return helper.auth(email, senha)
 
 # cadastrar novo usuario
 @usuarios_ns.route("/", methods=["POST", "GET"])
@@ -99,22 +106,3 @@ class UsuarioUpdateResource(Resource):
     def delete(self, id_usuario):
         response = usuarios_controller.remover_usuario(id_usuario)
         return response
-
-
-# @usuarios_ns.route("/login", methods=["POST"])
-# class UsuarioResource(Resource):
-
-#     @usuarios_ns.doc(description="Login de usuário", body=usuario_login_model)
-#     def post(self):
-#         data = request.get_json()
-#         if not data:
-#             return {
-#                 "success": False,
-#                 "data": "Conteúdo da requisição nao e JSON ou esta vazio!",
-#             }
-
-#         email = data.get("email")
-#         senha = data.get("senha")
-
-#         response = usuarios_controller.login_usuario(email, senha)
-#         return response

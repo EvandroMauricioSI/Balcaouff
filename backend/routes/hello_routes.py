@@ -8,6 +8,5 @@ hello_ns = Namespace("hello")
 class Hello(Resource):
     @helper.token_required
     def get(self, usuario_atual):
-        print("Tipo de usuario_atual:", type(usuario_atual))
         response = hello_controller.get_data(usuario_atual)
         return response

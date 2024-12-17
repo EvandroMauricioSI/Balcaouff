@@ -8,16 +8,15 @@ import jwt
 from werkzeug.security import check_password_hash
 
 
-def auth():
-    auth = request.authorization
-    if not auth or not auth.username or not auth.password:
-        return jsonify({"success": False, "data": "Login necessario."})
+def auth(email_usuario, senha_usuario):
+    if not email_usuario or not senha_usuario:
+        return jsonify({"success": False, "data": "Faltam campos obrigatorios."})
     
-    usuario = usuario_por_email(auth.username)
+    usuario = usuario_por_email(email_usuario)
     if not usuario:
         return jsonify({"success": False, "data": "Usuario nao encontrado."})
     
-    if usuario and check_password_hash(usuario.senha, auth.password):
+    if usuario and check_password_hash(usuario.senha, senha_usuario):
         token = jwt.encode({
             "id": usuario.id, 
             "exp": (datetime.datetime.now() + datetime.timedelta(hours=12))
