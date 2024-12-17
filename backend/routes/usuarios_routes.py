@@ -24,7 +24,7 @@ usuario_login_model = usuarios_ns.model(
     },
 )
 
-@usuarios_ns.route("/login", methods=["POST", "GET"]) # login
+@usuarios_ns.route("/login", methods=["GET", "POST"])
 class UsuarioAuth(Resource):
     @usuarios_ns.doc(
         description = "Retorno de Token",
@@ -34,6 +34,7 @@ class UsuarioAuth(Resource):
         data = request.get_json()
         email = data.get("email")
         senha = data.get("senha")
+
         return helper.auth(email, senha)
 
 # cadastrar novo usuario
@@ -49,14 +50,12 @@ class UsuarioResource(Resource):
                 "data": "Conteudo da requisição nao e JSON ou esta vazio!",
             }
 
-        # !!!!! MUDAR PARAMETROS DPS !!!!!
-
         email = data.get("email")
         senha = data.get("senha")
-        nome = None  # nome = data.get("nome")
-        ocupacao = None  # nome = data.get("nome")
-        telefone = None  # nome = data.get("nome")
-        foto_de_perfil = None  # nome = data.get("nome")
+        nome = data.get("nome")
+        ocupacao = data.get("ocupacao")
+        telefone = data.get("telefone")
+        foto_de_perfil = data.get("foto_de_perfil")
 
         response = usuarios_controller.cadastrar_usuario(
             nome, email, senha, ocupacao, telefone, foto_de_perfil
@@ -66,7 +65,8 @@ class UsuarioResource(Resource):
     @usuarios_ns.doc(
         description="Captura dados de usuários, se tiver usuario_id, captura dados de um usuario especifico"
     )
-    def get(self):
+    @helper.token_required
+    def get(self, usuario_atual):
         id_usuario = request.args.get("id", default=None, type=int)
         return usuarios_controller.listar_usuarios(id_usuario)
 
@@ -91,16 +91,36 @@ class UsuarioUpdateResource(Resource):
         email = data.get("email")
         senha = data.get("senha")
         nome = data.get("nome")
-        ocupacao = None  # nome = data.get("nome")
-        telefone = None  # nome = data.get("nome")
-        foto_de_perfil = None  # nome = data.get("nome")
+        ocupacao = data.get("ocupacao")
+        telefone = data.get("telefone")
+        foto_de_perfil = data.get("foto_de_perfil")
         
-        response = usuarios_controller.atualizar_usuario(usuario_atual.email, email, senha, nome)
+        response = usuarios_controller.atualizar_usuario(usuario_atual.id, email, senha, nome, ocupacao, telefone, foto_de_perfil, None)
         return response
 
+    # remover conta
     @usuarios_ns.doc(
-        description="Remover um usuario específico dado um ID",
+        description="Remover conta",
     )
-    def delete(self, id_usuario):
+    @helper.token_required
+    def delete(self, usuario_atual):
+        response = usuarios_controller.remover_usuario(usuario_atual.id)
+        return response
+
+
+@usuarios_ns.route("/admin/atualizar/<int:id_usuario>/<string:admin_boleano>", methods=["PUT"])
+class UsuarioAdminAtualizar(Resource):
+    @usuarios_ns.doc(description = "Atualizar um usuario para admin")
+    @helper.token_required_admin
+    def put(self, usuario_atual, id_usuario, admin_boleano):
+        response = usuarios_controller.atualizar_usuario(id_usuario, None, None, None, None, None, None, admin_boleano)
+        return response
+    
+@usuarios_ns.route("/admin/remover/<int:id_usuario>", methods=["DELETE"])
+class UsuarioAdminRemover(Resource):
+    @usuarios_ns.doc(description = "Remover um usuario")
+    @helper.token_required_admin
+    def delete(self, usuario_atual, id_usuario):
         response = usuarios_controller.remover_usuario(id_usuario)
         return response
+    
