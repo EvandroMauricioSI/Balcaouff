@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from controller import usuarios_controller
+from controller import usuarios_controller, helper
 
 usuarios_ns = Namespace("usuarios")
 
@@ -24,6 +24,10 @@ usuario_login_model = usuarios_ns.model(
     },
 )
 
+@usuarios_ns.route("/auth", methods=["POST", "GET"])
+class UsuarioAuth(Resource):
+    def post(self):
+        return helper.auth()
 
 @usuarios_ns.route("/", methods=["POST", "GET"])
 class UsuarioResource(Resource):
