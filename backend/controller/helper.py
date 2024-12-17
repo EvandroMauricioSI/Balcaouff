@@ -3,15 +3,10 @@ from functools import wraps
 # from app import app
 from config import key
 from flask import request, jsonify
-from .usuarios_controller import usuario_por_email
+from .usuarios_controller import usuario_por_email, usuario_por_id
 import jwt
 from werkzeug.security import check_password_hash
 
-# import string
-# import random
-
-# random_str = string.ascii_letters + string.digits + string.ascii_uppercase
-# key = ''.join(random.choice(random_str) for i in range(12))
 
 def auth():
     auth = request.authorization
@@ -24,7 +19,7 @@ def auth():
     
     if usuario and check_password_hash(usuario.senha, auth.password):
         token = jwt.encode({
-            "email": usuario.email, 
+            "id": usuario.id, 
             "exp": (datetime.datetime.now() + datetime.timedelta(hours=12))
             }, key)
         
@@ -42,13 +37,17 @@ def auth():
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        if args:
+            self = args[0]  
+            args = args[1:] 
+
         token = request.args.get("token")
         if not token:
             return jsonify({"success": False, "data": "Token e necessario."})
         
         try: 
             data = jwt.decode(token, key, algorithms=["HS256"])
-            usuario_atual = usuario_por_email(email=data["email"])
+            usuario_atual = usuario_por_id(id=data["id"])
 
         except jwt.ExpiredSignatureError:
             return jsonify({"success": False, "data": "Token expirado."})
@@ -60,6 +59,7 @@ def token_required(f):
             print(f"Erro inesperado: {e}")
             return jsonify({"success": False, "data": "Token inválido ou erro ao processar."})
         
-        return f(usuario_atual, *args, **kwargs)
+        return f(self, usuario_atual, *args, **kwargs)
     
     return decorated
+

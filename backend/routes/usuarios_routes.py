@@ -7,12 +7,12 @@ usuarios_ns = Namespace("usuarios")
 usuario_model = usuarios_ns.model(
     "Usuario",
     {
-        "nome": fields.String(required=True, description="Nome do usuário"),
         "email": fields.String(required=True, description="Email do usuário"),
         "senha": fields.String(required=True, description="Senha do usuário"),
-        # 'ocupacao': fields.String(required=False, description="Ocupação do usuário"),
-        # 'telefone': fields.String(required=False, description="Telefone do usuário"),
-        # 'foto_de_perfil': fields.String(required=False, description="Foto de perfil do usuário")
+        "nome": fields.String(required=False, description="Nome do usuário"),
+        'ocupacao': fields.String(required=False, description="Ocupação do usuário"),
+        'telefone': fields.String(required=False, description="Telefone do usuário"),
+        'foto_de_perfil': fields.String(required=False, description="Foto de perfil do usuário")
     },
 )
 
@@ -24,11 +24,12 @@ usuario_login_model = usuarios_ns.model(
     },
 )
 
-@usuarios_ns.route("/auth", methods=["POST", "GET"])
+@usuarios_ns.route("/auth", methods=["POST", "GET"]) # login
 class UsuarioAuth(Resource):
     def post(self):
         return helper.auth()
 
+# cadastrar novo usuario
 @usuarios_ns.route("/", methods=["POST", "GET"])
 class UsuarioResource(Resource):
 
@@ -63,14 +64,16 @@ class UsuarioResource(Resource):
         return usuarios_controller.listar_usuarios(id_usuario)
 
 
-@usuarios_ns.route("/<int:id_usuario>", methods=["PUT", "DELETE"])
+@usuarios_ns.route("/", methods=["PUT", "DELETE"])
 class UsuarioUpdateResource(Resource):
 
+    # atualiza dados
     @usuarios_ns.doc(
         description="Atualiza os dados de um usuario específico dado um ID",
-        body=usuario_model,
+        body=usuario_model
     )
-    def put(self, id_usuario):
+    @helper.token_required
+    def put(self, usuario_atual):
         data = request.get_json()
         if not data:
             return {
@@ -78,11 +81,16 @@ class UsuarioUpdateResource(Resource):
                 "data": "Conteúdo da requisição nao e JSON ou esta vazio!",
             }
 
-        nome = data.get("nome")
         email = data.get("email")
         senha = data.get("senha")
+        nome = data.get("nome")
+        ocupacao = None  # nome = data.get("nome")
+        telefone = None  # nome = data.get("nome")
+        foto_de_perfil = None  # nome = data.get("nome")
 
-        response = usuarios_controller.atualizar_usuario(id_usuario, nome, email, senha)
+        print('---------------------uauario atual', usuario_atual)
+
+        response = usuarios_controller.atualizar_usuario(usuario_atual.email, email, senha, nome)
         return response
 
     @usuarios_ns.doc(
@@ -93,20 +101,20 @@ class UsuarioUpdateResource(Resource):
         return response
 
 
-@usuarios_ns.route("/login", methods=["POST"])
-class UsuarioResource(Resource):
+# @usuarios_ns.route("/login", methods=["POST"])
+# class UsuarioResource(Resource):
 
-    @usuarios_ns.doc(description="Login de usuário", body=usuario_login_model)
-    def post(self):
-        data = request.get_json()
-        if not data:
-            return {
-                "success": False,
-                "data": "Conteúdo da requisição nao e JSON ou esta vazio!",
-            }
+#     @usuarios_ns.doc(description="Login de usuário", body=usuario_login_model)
+#     def post(self):
+#         data = request.get_json()
+#         if not data:
+#             return {
+#                 "success": False,
+#                 "data": "Conteúdo da requisição nao e JSON ou esta vazio!",
+#             }
 
-        email = data.get("email")
-        senha = data.get("senha")
+#         email = data.get("email")
+#         senha = data.get("senha")
 
-        response = usuarios_controller.login_usuario(email, senha)
-        return response
+#         response = usuarios_controller.login_usuario(email, senha)
+#         return response

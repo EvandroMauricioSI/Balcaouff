@@ -91,3 +91,9 @@ def usuario_por_email(email):
         return Usuario.query.filter_by(email = email).first() 
     except:
         return None
+    
+def usuario_por_id(id):
+    try:
+        return Usuario.query.filter_by(id = id).first() 
+    except:
+        return None
