@@ -10,6 +10,7 @@ class Usuario(db.Model):
     ocupacao = db.Column(db.String(100), nullable=True)
     telefone = db.Column(db.String(100), nullable=True)
     foto_de_perfil = db.Column(db.String(100), nullable=True)
+    admin = db.Column(db.Boolean, nullable=True)
 
     def __init__(self, nome=None, email=None, senha=None, ocupacao=None, telefone=None, foto_de_perfil=None):
         self.email = email

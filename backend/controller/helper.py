@@ -62,3 +62,34 @@ def token_required(f):
     
     return decorated
 
+def token_required_admin(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if args:
+            self = args[0]  
+            args = args[1:] 
+
+        token = request.args.get("token")
+        if not token:
+            return jsonify({"success": False, "data": "Token e necessario."})
+        
+        try: 
+            data = jwt.decode(token, key, algorithms=["HS256"])
+            usuario_atual = usuario_por_id(id=data["id"])
+
+            if usuario_atual.admin == True:
+                return f(self, usuario_atual, *args, **kwargs)
+            else:
+                return jsonify({"success": False, "data": "Acesso negado."})
+
+        except jwt.ExpiredSignatureError:
+            return jsonify({"success": False, "data": "Token expirado."})
+        
+        except jwt.DecodeError:
+            return jsonify({"success": False, "data": "Erro ao decodificar o token."})
+        
+        except Exception as e:
+            print(f"Erro inesperado: {e}")
+            return jsonify({"success": False, "data": "Token inválido ou erro ao processar."})
+    
+    return decorated

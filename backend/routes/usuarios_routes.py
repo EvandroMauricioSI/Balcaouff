@@ -94,9 +94,7 @@ class UsuarioUpdateResource(Resource):
         ocupacao = None  # nome = data.get("nome")
         telefone = None  # nome = data.get("nome")
         foto_de_perfil = None  # nome = data.get("nome")
-
-        print('---------------------uauario atual', usuario_atual)
-
+        
         response = usuarios_controller.atualizar_usuario(usuario_atual.email, email, senha, nome)
         return response
 
