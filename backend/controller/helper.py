@@ -7,6 +7,12 @@ from .usuarios_controller import usuario_por_email, usuario_por_id
 import jwt
 from werkzeug.security import check_password_hash
 
+token_param = {
+    "description": "Token recebido ao fazer login.",
+    "in": "query",
+    "type": "string",
+    "required": True
+}
 
 def auth(email_usuario, senha_usuario):
     if not email_usuario or not senha_usuario:
