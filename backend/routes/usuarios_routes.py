@@ -9,15 +9,15 @@ usuario_model = usuarios_ns.model(
     {
         "email": fields.String(required=True, description="Email do usuário"),
         "senha": fields.String(required=True, description="Senha do usuário"),
-        "nome": fields.String(required=False, description="Nome do usuário"),
-        'ocupacao': fields.String(required=False, description="Ocupação do usuário"),
-        'telefone': fields.String(required=False, description="Telefone do usuário"),
-        'foto_de_perfil': fields.String(required=False, description="Foto de perfil do usuário")
-    },
+        "nome": fields.String(required=True, description="Nome do usuário"),
+        "ocupacao": fields.String(required=False, description="Ocupação do usuário"),
+        "telefone": fields.String(required=False, description="Telefone do usuário"),
+        "foto_de_perfil": fields.String(required=False, description="Foto de perfil do usuário")
+    }
 )
 
 usuario_login_model = usuarios_ns.model(
-    "Usuario",
+    "UsuarioLogin",
     {
         "email": fields.String(required=True, description="Email do usuário"),
         "senha": fields.String(required=True, description="Senha do usuário"),
@@ -37,11 +37,10 @@ class UsuarioAuth(Resource):
 
         return helper.auth(email, senha)
 
-# cadastrar novo usuario
-@usuarios_ns.route("/", methods=["POST", "GET"])
-class UsuarioResource(Resource):
-
-    @usuarios_ns.doc(description="Cadastro de novo usuário", body=usuario_login_model)
+# Cadastrar novo usuario
+@usuarios_ns.route("/cadastrar", methods=["POST"])
+class UsuarioCadastrar(Resource):
+    @usuarios_ns.doc(description="Cadastro de novo usuário", body=usuario_model)
     def post(self):
         data = request.get_json()
         if not data:
@@ -62,8 +61,12 @@ class UsuarioResource(Resource):
         )
         return response
 
+# Captura usuarios
+@usuarios_ns.route("/listar", methods=["GET"])
+class UsuarioCapturaUsuarios(Resource):
     @usuarios_ns.doc(
-        description="Captura dados de usuários, se tiver usuario_id, captura dados de um usuario especifico"
+        description="Captura dados de usuários, se tiver usuario_id, captura dados de um usuario especifico",
+        params={"token": helper.token_param}
     )
     @helper.token_required
     def get(self, usuario_atual):
@@ -77,6 +80,7 @@ class UsuarioUpdateResource(Resource):
     # atualiza dados
     @usuarios_ns.doc(
         description="Atualiza os dados de um usuario específico dado um ID",
+        params={"token": helper.token_param},
         body=usuario_model
     )
     @helper.token_required
@@ -101,6 +105,7 @@ class UsuarioUpdateResource(Resource):
     # remover conta
     @usuarios_ns.doc(
         description="Remover conta",
+        params={"token": helper.token_param}
     )
     @helper.token_required
     def delete(self, usuario_atual):
@@ -110,7 +115,10 @@ class UsuarioUpdateResource(Resource):
 
 @usuarios_ns.route("/admin/atualizar/<int:id_usuario>/<string:admin_boleano>", methods=["PUT"])
 class UsuarioAdminAtualizar(Resource):
-    @usuarios_ns.doc(description = "Atualizar um usuario para admin")
+    @usuarios_ns.doc(
+        description = "Atualizar um usuario para admin",
+        params={"token": helper.token_param}
+    )
     @helper.token_required_admin
     def put(self, usuario_atual, id_usuario, admin_boleano):
         response = usuarios_controller.atualizar_usuario(id_usuario, None, None, None, None, None, None, admin_boleano)
@@ -118,7 +126,10 @@ class UsuarioAdminAtualizar(Resource):
     
 @usuarios_ns.route("/admin/remover/<int:id_usuario>", methods=["DELETE"])
 class UsuarioAdminRemover(Resource):
-    @usuarios_ns.doc(description = "Remover um usuario")
+    @usuarios_ns.doc(
+        description = "Remover um usuario",
+        params={"token": helper.token_param}
+    )
     @helper.token_required_admin
     def delete(self, usuario_atual, id_usuario):
         response = usuarios_controller.remover_usuario(id_usuario)
