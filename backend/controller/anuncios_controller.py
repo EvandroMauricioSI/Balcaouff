@@ -74,3 +74,56 @@ def deletar_anuncio(id_anuncio):
         return {"success": True, "data": "Anúncio excluído com sucesso!"}, 200
     except Exception as e:
         return {"success": False, "data": str(e)}, 500
+
+
+def listar_anuncios_ativos():
+    try:
+        anuncios_ativos = Anuncio.query.filter_by(status="ativo").all()
+        return {
+            "success": True,
+            "data": [anuncio.json() for anuncio in anuncios_ativos]
+        }, 200
+    except Exception as e:
+        return {"success": False, "data": str(e)}, 500
+    
+
+
+def listar_anuncios_por_usuario(usuario_id):
+    try:
+        anuncios_usuario = Anuncio.query.filter_by(anunciante=usuario_id).all()
+        return {
+            "success": True,
+            "data": [anuncio.json() for anuncio in anuncios_usuario]
+        }, 200
+    except Exception as e:
+        return {"success": False, "data": str(e)}, 500
+
+
+def processar_compra(id_anuncio):
+    try:
+        anuncio = Anuncio.query.get(id_anuncio)
+        if not anuncio:
+            return {"success": False, "data": "Anúncio não encontrado!"}, 404
+
+        # Atualizar o status para "inativo"
+        anuncio.status = "inativo"
+
+        db.session.commit()
+        return {"success": True, "data": anuncio.json()}, 200
+    except Exception as e:
+        return {"success": False, "data": str(e)}, 500
+
+
+def registrar_avaliacao(id_anuncio, avaliacao):
+    try:
+        anuncio = Anuncio.query.get(id_anuncio)
+        if not anuncio:
+            return {"success": False, "data": "Anúncio não encontrado!"}, 404
+
+        # Atualizar a avaliação com a nota recebida
+        anuncio.avaliacao = avaliacao
+
+        db.session.commit()
+        return {"success": True, "data": anuncio.json()}, 200
+    except Exception as e:
+        return {"success": False, "data": str(e)}, 500
