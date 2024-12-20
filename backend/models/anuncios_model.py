@@ -11,6 +11,7 @@ class Anuncio(db.Model):
     descricao = db.Column(db.String(255), nullable=False)
     preco = db.Column(db.Float, nullable=False)
     foto = db.Column(db.String(20000), nullable=True)
+    status = db.Column(db.String(255), nullable=True)
     categoria = db.Column(
         db.Integer, db.ForeignKey("categorias.id_categoria"), nullable=False
     )
@@ -35,4 +36,5 @@ class Anuncio(db.Model):
             "anunciante": self.anunciante,
             "comprador": self.comprador,
             "local": self.local,
+            "status": self.status
         }
