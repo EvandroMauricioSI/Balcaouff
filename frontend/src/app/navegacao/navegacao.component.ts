@@ -85,6 +85,11 @@ export class NavegacaoComponent implements OnInit {
 
   }
 
+  logoff(){
+    localStorage.removeItem('usuario')
+    this.router.navigate(['/login'])
+  }
+
 
   ngOnDestroy(): void {
   }

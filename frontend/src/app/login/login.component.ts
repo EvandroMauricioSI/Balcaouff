@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.formLogin = this.form.group({
       login: [null, [Validators.required, this.emailValidator()]],
       senha: [null, [Validators.required]],
-      senha2: [null],
+      senha2: [null]
       //usuario: [null]
     }, {
       validators: [comparaSenhas()]
@@ -132,7 +132,11 @@ export class LoginComponent implements OnInit {
   enviarDados() {
     const formulario: Usuario = {
       email: this.formLogin.get('login')?.value,
-      senha: this.formLogin.get('senha')?.value
+      senha: this.formLogin.get('senha')?.value,
+      nome: null,
+      ocupacao: null,
+      telefone: null,
+      foto_de_perfil: null
     }
 
     if(this.cadastro){

@@ -15,10 +15,11 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
 
     const user = localStorage.getItem('usuario');
+    const data = new Date(Date.now()).toISOString()
 
     if (user) {
       this.permissao = JSON.parse(user)
-      if(this.permissao.data == 'Bem vindo, novo usuario!'){ //GUARDAR A ROTA PELO ID DO MELIANTE
+      if(this.permissao.message == 'Usuario autenticado' && Date.parse(this.permissao.exp) > Date.parse(data)){ //GUARDAR A ROTA PELO ID DO MELIANTE
         return true;
       } else {
         this.router.navigate(['/perfil']);
