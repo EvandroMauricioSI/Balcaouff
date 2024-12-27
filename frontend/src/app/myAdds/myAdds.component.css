@@ -3,8 +3,17 @@
   max-width: 1200px;
   margin: auto;
   margin-top: 40px;
+  padding: 15px;
 }
-
+.title{
+  color: #2e2e2e;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 100 bold;
+}
+.message{
+  color: red;
+  font-size: 20px;
+}
 .image-container {
   width: 250px;
   height: 250px;

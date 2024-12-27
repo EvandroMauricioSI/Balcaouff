@@ -2,18 +2,40 @@
 	<mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
 		<mat-nav-list>
 
+      <!--HOME-->
+			<mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="">
+        <mat-icon mat-list-icon class="ajusteTexto">home</mat-icon>
+				<span *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Home</span>
+			</mat-list-item>
+      
+      <!--MEUS ANÚNCIOS-->
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/meusAnuncios">
+        <mat-icon mat-list-icon class="ajusteTexto">ads_click</mat-icon>
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meus anuncios</span>
+			</mat-list-item>
+      
+      <!--MENSAGENS-->
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
+        <mat-icon mat-list-icon class="ajusteTexto">chat</mat-icon>
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Mensagens</span>
+			</mat-list-item>
+      
+      <!--MEU PERFIL-->
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/perfil">
+        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meu perfil</span>
+			</mat-list-item>
+      
+      <!--MEU PERFIL (CARD)-->
+       <!--
       <span class="perfil" *ngIf="isExpanded || isShowing">
-
         <mat-card class="profile-card">
           <div class="image-container">
             <img src="https://tecoapple.com/wp-content/uploads/2019/05/clairobagsa019.jpg" alt="Foto do usuário" class="profile-image"/>
           </div>
-
           <div class="profile-details">
             <h2 class="profile-name">{{nomeUsuario}}</h2>
             <p class="profile-name">{{rating}}</p>
-
-
             <div class="star-rating">
               <mat-icon *ngFor="let star of stars; let i = index">
                 star
@@ -22,55 +44,22 @@
           </div>
         </mat-card>
         <br><br>
-
       </span>
+      -->
 
-      <div *ngIf="!isExpanded && !isShowing" style="height:100px">
-      </div>
-
-			<mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="">
-        <mat-icon mat-list-icon class="ajusteTexto">home</mat-icon>
-				<span *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Home</span>
-			</mat-list-item>
-
-      <div *ngIf="!isExpanded && !isShowing" style="height:50px">
-      </div>
-
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/meusAnuncios">
-        <mat-icon mat-list-icon class="ajusteTexto">ads_click</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meus anuncios</span>
-			</mat-list-item>
-
-      <div *ngIf="!isExpanded && !isShowing" style="height:50px">
-      </div>
-
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
-        <mat-icon mat-list-icon class="ajusteTexto">chat</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Mensagens</span>
-			</mat-list-item>
-
-      <div *ngIf="!isExpanded && !isShowing" style="height:50px">
-      </div>
-
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/perfil">
-        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meu perfil</span>
-			</mat-list-item>
-
-      <div *ngIf="!isExpanded && !isShowing" style="height:50px">
-      </div>
-
+      <!--SAIR-->
       <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" (click)="logoff()">
         <mat-icon mat-list-icon class="ajusteTexto">logout</mat-icon>
 				<span class="full-width" *ngIf="isExpanded || isShowing" (click)="logoff()">&nbsp;&nbsp;Sair</span>
 			</mat-list-item>
-
-      <br><br>
-
-		</mat-nav-list>
-
+      
+      <!--ESPAÇO-->
+      <div *ngIf="!isExpanded && !isShowing" style="height:50px"> </div>
+	
+    </mat-nav-list>
   </mat-sidenav>
-	<div>
+	
+  <div>
 		<router-outlet />
 	</div>
 
