@@ -11,7 +11,7 @@ class Localizacao(db.Model):
     cidade = db.Column(db.String(50), nullable=False)
     estado = db.Column(db.String(50), nullable=False)
 
-    def json(self):
+    def to_dict(self):
         return {
             "id_localizacao": self.id_localizacao,
             "bairro": self.bairro,

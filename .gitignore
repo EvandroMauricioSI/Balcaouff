@@ -6,3 +6,4 @@ backend/models/__pycache__
 
 # Análise estática de código
 .vscode
+.venv

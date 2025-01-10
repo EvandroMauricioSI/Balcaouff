@@ -21,6 +21,7 @@ anuncio_model = anuncios_ns.model(
         "anunciante": fields.Integer(required=True, description="ID do anunciante"),
         "comprador": fields.Integer(description="ID do comprador, pode ser Nulo"),
         "local": fields.Integer(required=True, description="ID da localização"),
+        "status": fields.Boolean(required=True, description="Status do anuncio, se ativo ou não.")
     },
 )
 
@@ -47,6 +48,7 @@ class AnuncioResource(Resource):
         anunciante = data.get("anunciante")
         comprador = None  # data.get("comprador") - Isso inicialmente é definido depois.
         local = data.get("local")
+        status = True
 
         # Chamar o controlador para criar um novo anúncio
         response = anuncios_controller.criar_anuncio(
@@ -60,6 +62,7 @@ class AnuncioResource(Resource):
             anunciante,
             comprador,
             local,
+            status
         )
 
         return response
