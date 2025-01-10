@@ -10,7 +10,7 @@ class Usuario(db.Model):
     ocupacao = db.Column(db.String(100), nullable=True)
     telefone = db.Column(db.String(100), nullable=True)
     foto_de_perfil = db.Column(db.String(20000), nullable=True)
-    admin = db.Column(db.Boolean, nullable=True)
+    admin = db.Column(db.Boolean, default=False, nullable=True)
 
     def __init__(self, 
                  nome=None, 
@@ -27,7 +27,6 @@ class Usuario(db.Model):
         self.telefone = telefone
         self.foto_de_perfil = foto_de_perfil
         self.admin = admin
-
 
     def to_dict(self):
         return {

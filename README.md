@@ -27,7 +27,21 @@ Caso esteja pelo WSL, e provavelmente o linux é necessário utilizar o comando 
 
 Para caso de popular o banco de dados, será criado um arquivo à que fará a população do banco. Que bastará a seguinte operação para popular o banco, uma vez que o mesmo esteja executando:
 
+(Primeiro precisará criar um ambiente virtual para instalar os pacotes, porém é algo simples):
 ```bash
-python populate.py
+python3 -m venv .venv
+
+source .venv/bin/activate # Caso esteja no Linux, se fazendo pelo powershell é source .venv\Scripts\activate
+
+pip install -r backend/requirements.txt
+```
+
+Depois de instalar, caso não tenha nenhum erro com biblioteca, eu tive com o psycopg2 e tive que instalar o binary dele, avisando só para ficar de olho nisso, basta fazer o seguinte comando:
+
+```bash
+python3 backend/populate.py
+
+# E depois  sair da venv
+deactivate
 ```
 
