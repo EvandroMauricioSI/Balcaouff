@@ -120,6 +120,7 @@ with app.app_context():
         ])
         db.session.commit()
 
+        # Inserção de Anúncios no banco.
         db.session.add_all([
             anuncio1, anuncio2, anuncio3
         ])
