@@ -65,14 +65,16 @@ class UsuarioCadastrar(Resource):
 @usuarios_ns.route("/listar", methods=["GET"])
 class UsuarioCapturaUsuarios(Resource):
     @usuarios_ns.doc(
-        description="Captura dados de usuários, se tiver usuario_id, captura dados de um usuario especifico",
-        params={"token": helper.token_param}
+        description="Captura dados de usuários. Se o parâmetro 'id' for fornecido, captura os dados de um usuário específico.",
+        params={"token": helper.token_param, "id": "ID opcional do usuário a ser capturado."}
     )
     @helper.token_required
     def get(self, usuario_atual):
+        # Obtém o ID do usuário dos argumentos da requisição, se presente
         id_usuario = request.args.get("id", default=None, type=int)
+        # Chama o controlador com o ID (ou None)
         return usuarios_controller.listar_usuarios(id_usuario)
-
+        
 
 @usuarios_ns.route("/", methods=["PUT", "DELETE"])
 class UsuarioUpdateResource(Resource):

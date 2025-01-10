@@ -9,7 +9,7 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=True) # dps muda pra nullable=False
     ocupacao = db.Column(db.String(100), nullable=True)
     telefone = db.Column(db.String(100), nullable=True)
-    foto_de_perfil = db.Column(db.String(100), nullable=True)
+    foto_de_perfil = db.Column(db.String(20000), nullable=True)
     admin = db.Column(db.Boolean, nullable=True)
 
     def __init__(self, 
@@ -34,5 +34,7 @@ class Usuario(db.Model):
             'id': self.id,
             'nome': self.nome,
             'email': self.email,
+            'ocupacao': self.ocupacao,
             'telefone': self.telefone,
+            'foto_de_perfil': self.foto_de_perfil
         }
