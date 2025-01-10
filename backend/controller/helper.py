@@ -33,7 +33,9 @@ def auth(email_usuario, senha_usuario):
                         "data": {
                             "message": "Usuario autenticado",
                             "token": token,
-                            "exp": datetime.datetime.now() + datetime.timedelta(hours=12)
+                            "exp": datetime.datetime.now() + datetime.timedelta(hours=12),
+                            "id_usuario": usuario.id,
+                            "admin_usuario": usuario.admin
                         }
                         })
     

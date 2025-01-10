@@ -9,8 +9,8 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), nullable=True) # dps muda pra nullable=False
     ocupacao = db.Column(db.String(100), nullable=True)
     telefone = db.Column(db.String(100), nullable=True)
-    foto_de_perfil = db.Column(db.String(100), nullable=True)
-    is_admin = db.Column(db.Boolean, default=False, nullable=True)
+    foto_de_perfil = db.Column(db.String(20000), nullable=True)
+    admin = db.Column(db.Boolean, default=False, nullable=True)
 
     def __init__(self, 
                  nome=None, 
@@ -19,19 +19,21 @@ class Usuario(db.Model):
                  ocupacao=None, 
                  telefone=None, 
                  foto_de_perfil=None,
-                 is_admin=False):
+                 admin=False):
         self.email = email
         self.senha = senha
         self.nome = nome
         self.ocupacao = ocupacao
         self.telefone = telefone
         self.foto_de_perfil = foto_de_perfil
-        self.is_admin = is_admin
+        self.admin = admin
 
     def to_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
             'email': self.email,
+            'ocupacao': self.ocupacao,
             'telefone': self.telefone,
+            'foto_de_perfil': self.foto_de_perfil
         }

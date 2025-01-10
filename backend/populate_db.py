@@ -36,19 +36,19 @@ with app.app_context():
     # Criando usuários de exemplo
     user1 = Usuario(nome="João", email="joao@example.com",
                     senha=generate_password_hash('12345'),
-                    is_admin=True)
+                    admin=True)
     user2 = Usuario(nome="Maria", email="maria@example.com",
                     senha=generate_password_hash('12345'),
-                    is_admin=False)
+                    admin=False)
     user3 = Usuario(nome="Heleno", email="hellno@example.com",
                     senha=generate_password_hash('12345'),
-                    is_admin=False)
+                    admin=False)
     user4 = Usuario(nome="Ana Maria", email="anamaria@example.com",
                     senha=generate_password_hash('12345'),
-                    is_admin=False)
+                    admin=False)
     user5 = Usuario(nome="Camila Alvarez", email="camialvarez@example.com",
                     senha=generate_password_hash('12345'),
-                    is_admin=False)
+                    admin=False)
 
     cat1 = Categoria(nome="Eletrônicos")
     cat2 = Categoria(nome="Livros e Material de Estudo")

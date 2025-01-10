@@ -1,7 +1,4 @@
 from models.anuncios_model import Anuncio
-from models.categorias_model import Categoria
-from models.localizacao_model import Localizacao
-from models.usuario_model import Usuario
 from extensions import db
 
 
@@ -48,11 +45,6 @@ def listar_anuncios(id_anuncio=None):
             return {"success": True, "data": anuncio.json()}, 200
 
         anuncios = Anuncio.query.all()
-        for anuncio in anuncios:
-            anuncio.categoria = Categoria.query.get(anuncio.categoria).to_dict()
-            anuncio.local = Localizacao.query.get(anuncio.local).to_dict()
-            anuncio.anunciante = Usuario.query.get(anuncio.anunciante).to_dict()
-            anuncio.comprador = Usuario.query.get(anuncio.comprador).to_dict() if anuncio.comprador else None
 
         return {"success": True, "data": [a.json() for a in anuncios]}, 200
     except Exception as e:
@@ -100,13 +92,7 @@ def listar_anuncios_ativos():
     
 def listar_anuncios_por_usuario(usuario_id):
     try:
-        anuncios_usuario = Anuncio.query.filter_by(anunciante=usuario_id).all()
-        for anuncio in anuncios_usuario:
-            anuncio.categoria = Categoria.query.get(anuncio.categoria).to_dict()
-            anuncio.local = Localizacao.query.get(anuncio.local).to_dict()
-            anuncio.anunciante = Usuario.query.get(anuncio.anunciante).to_dict()
-            anuncio.comprador = Usuario.query.get(anuncio.comprador).to_dict() if anuncio.comprador else None   
-        
+        anuncios_usuario = Anuncio.query.filter_by(anunciante=usuario_id).all()        
         return {
             "success": True,
             "data": [anuncio.json() for anuncio in anuncios_usuario]
