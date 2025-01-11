@@ -35,7 +35,7 @@ api.add_namespace(categorias_ns, path="/api/categorias")
 with app.app_context():
     # Criando usuários de exemplo
     user1 = Usuario(nome="João", email="joao@example.com",
-                    senha=generate_password_hash('12345'),
+                    senha=generate_password_hash('admin'),
                     admin=True)
     user2 = Usuario(nome="Maria", email="maria@example.com",
                     senha=generate_password_hash('12345'),
@@ -47,8 +47,8 @@ with app.app_context():
                     senha=generate_password_hash('12345'),
                     admin=False)
     user5 = Usuario(nome="Camila Alvarez", email="camialvarez@example.com",
-                    senha=generate_password_hash('12345'),
-                    admin=False)
+                    senha=generate_password_hash('admin'),
+                    admin=True)
 
     cat1 = Categoria(nome="Eletrônicos")
     cat2 = Categoria(nome="Livros e Material de Estudo")
