@@ -21,7 +21,9 @@ localizacao_model = localizacao_ns.model(
 class LocalizacaoResource(Resource):
 
     @localizacao_ns.doc(
-        description="Criação de uma nova localização", body=localizacao_model
+        description="Criação de uma nova localização", 
+        params={"token": helper.token_param},
+        body=localizacao_model
     )
     @helper.token_required_admin
     def post(self, usuario_atual):
@@ -42,7 +44,8 @@ class LocalizacaoResource(Resource):
         return response
 
     @localizacao_ns.doc(
-        description="Captura todas as localizações, dependendo do ID fornecido."
+        description="Captura todas as localizações, dependendo do ID fornecido.",
+        params={"token": helper.token_param}
     )
     @helper.token_required_admin
     def get(self, usuario_atual):
@@ -54,7 +57,9 @@ class LocalizacaoResource(Resource):
 class LocalizacaoDetailResource(Resource):
 
     @localizacao_ns.doc(
-        description="Atualiza uma localização existente", body=localizacao_model
+        description="Atualiza uma localização existente", 
+        params={"token": helper.token_param},
+        body=localizacao_model
     )
     @helper.token_required_admin
     def put(self, usuario_atual, id_localizacao):
@@ -68,7 +73,10 @@ class LocalizacaoDetailResource(Resource):
         response = localizacao_controller.atualizar_localizacao(id_localizacao, data)
         return response
 
-    @localizacao_ns.doc(description="Exclui uma localização pelo ID.")
+    @localizacao_ns.doc(
+        description="Exclui uma localização pelo ID.",
+        params={"token": helper.token_param}
+    )
     @helper.token_required_admin
     def delete(self, usuario_atual, id_localizacao):
         response = localizacao_controller.deletar_localizacao(id_localizacao)
