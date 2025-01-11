@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from controller import localizacao_controller
+from controller import localizacao_controller, helper
 
 
 localizacao_ns = Namespace("localizacao")
@@ -23,7 +23,8 @@ class LocalizacaoResource(Resource):
     @localizacao_ns.doc(
         description="Criação de uma nova localização", body=localizacao_model
     )
-    def post(self):
+    @helper.token_required_admin
+    def post(self, usuario_atual):
         data = request.get_json()
         if not data:
             return {
@@ -43,7 +44,8 @@ class LocalizacaoResource(Resource):
     @localizacao_ns.doc(
         description="Captura todas as localizações, dependendo do ID fornecido."
     )
-    def get(self):
+    @helper.token_required_admin
+    def get(self, usuario_atual):
         id_localizacao = request.args.get("id_localizacao", default=None, type=int)
         return localizacao_controller.listar_localizacoes(id_localizacao)
 
@@ -54,7 +56,8 @@ class LocalizacaoDetailResource(Resource):
     @localizacao_ns.doc(
         description="Atualiza uma localização existente", body=localizacao_model
     )
-    def put(self, id_localizacao):
+    @helper.token_required_admin
+    def put(self, usuario_atual, id_localizacao):
         data = request.get_json()
         if not data:
             return {
@@ -66,6 +69,7 @@ class LocalizacaoDetailResource(Resource):
         return response
 
     @localizacao_ns.doc(description="Exclui uma localização pelo ID.")
-    def delete(self, id_localizacao):
+    @helper.token_required_admin
+    def delete(self, usuario_atual, id_localizacao):
         response = localizacao_controller.deletar_localizacao(id_localizacao)
         return response
