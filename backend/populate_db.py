@@ -54,7 +54,7 @@ with app.app_context():
                     admin=False)
     user7 = Usuario(nome="Juliana Costa", email="juliana.costa@example.com",
                     senha=generate_password_hash('12345'),
-                    admin=False)
+                    admin=True)
 
     cat1 = Categoria(nome="Eletrônicos")
     cat2 = Categoria(nome="Livros e Material de Estudo")
