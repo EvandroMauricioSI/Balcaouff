@@ -1,0 +1,38 @@
+<!--spinner-tela *ngIf="carregando" row="0" [texto]="texto" [total]="total"></spinner-tela-->
+
+
+<!--input type="file" class="file-upload" onchange="console.log(event.target.files)"-->
+
+<div *ngIf="!carregando">
+  <input type="file" class="file-input"
+       [accept]="requiredFileType"
+       (change)="onFileSelected($event)" #fileUpload multiple>
+
+<div class="file-upload" style="background-color: rgb(0, 45, 64);">
+  <mat-grid-list cols="12" rowHeight="40px">
+    <mat-grid-tile colspan="12">
+      <div class="ajustetxtd">
+        <button mat-raised-button class="botaoReturn"
+        (click)="fileUpload.click()">Anexar Arquivo</button>
+        <button mat-raised-button class="botaoValido"
+        (click)="enviarArquivo()">Enviar</button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+    <!--button mat-mini-fab color="primary" class="upload-btn"
+    >
+        <mat-icon>attach_file</mat-icon>
+    </button>
+
+    <button mat-raised-button (click)="enviarArquivo()">Enviar</button-->
+</div>
+
+<br>
+
+
+<app-uploadArquivo-tabela
+  [listaDearquivos]="listaDearquivos"
+  (registroExcluido)="deletaItem($event)"
+  ></app-uploadArquivo-tabela>
+
+</div>

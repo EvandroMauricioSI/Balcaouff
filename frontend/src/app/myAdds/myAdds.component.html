@@ -1,0 +1,60 @@
+<mat-card class="card-container">
+
+
+    <mat-grid-list cols="12" rowHeight="80px" gutterSize="20px">
+      <mat-grid-tile colspan="12">
+        <h1 class="title">{{'Meus Anúncios'}}
+        </h1>
+      </mat-grid-tile>
+
+      <div class="ajusteDireita">
+        <button mat-raised-button class="textoValido" (click)="criarAnuncio()"> Criar Anuncio </button>
+      </div>
+    </mat-grid-list>
+
+    <!-- Carrossel -->
+    <div div *ngIf="anuncios.length <= 0">
+
+      <mat-grid-list cols="12" rowHeight="480px" gutterSize="20px">
+        <mat-grid-tile colspan="12">
+          <h1 class="message">{{'Voce ainda nao possui anuncios!'}}
+          </h1>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+    </div>
+
+    <div *ngIf="anuncios.length > 0">
+      <mat-grid-list cols="12" rowHeight="680px" gutterSize="20px">
+        <div class="carousel-container">
+          <div class="carousel">
+            <div class="carousel-item" *ngFor="let item of anuncios; let i = index">
+              <mat-card class="example-card" appearance="outlined">
+                <mat-card-header>
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>{{ item.tipo }}</mat-card-title>
+                  <mat-card-subtitle>{{ item.descricao }}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="item.foto" alt="Imagem do anúncio">
+                <mat-card-content class="description-content">
+                  <p>{{ item.local }}</p>
+                  <p>{{ item.descricao }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button style="background-color: rgb(73, 117, 199);color:white;margin-right:5px" (click)="editarAnuncio(item)">EDITAR</button>
+                  <button mat-button style="background-color: rgb(100, 25, 25);color:white" (click)="excluirAnuncio(item)">EXCLUIR</button>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+          </div>
+          <!-- Setas de Navegação -->
+          <button class="carousel-button left" (click)="moveLeft()">&#10094;</button>
+          <button class="carousel-button right" (click)="moveRight()">&#10095;</button>
+        </div>
+      </mat-grid-list>
+    </div>
+
+
+
+</mat-card>
+

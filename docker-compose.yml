@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  psql-db:
+    image: postgres:15.2
+    container_name: psql-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+    env_file:
+      - .env
+    networks:
+      - app-network  # Conectando o psql-db à rede app-network
+
+  flask-backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask-backend
+    ports:
+      - "5000:5000"
+      #- "8080:8080"
+    depends_on:
+      psql-db:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - ./backend:/app
+    networks:
+      - app-network  # Conectando o flask-backend à rede app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3070:3070"
+    networks:
+      - app-network  # Conectando o frontend à rede app-network
+
+volumes:
+  db-volume:
+
+networks:
+  app-network:
+    driver: bridge

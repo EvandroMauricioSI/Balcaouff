@@ -1,0 +1,80 @@
+.title{
+  color: #2e2e2e;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}
+
+.bt{
+  margin: 20px;
+  height: 30px; width: 100px;
+  border: solid 1px blue;
+  border-radius: 10px;
+  background-color: white;
+  color: blue;
+  transition: background-color 0.5s ease, color 0.5s ease, transform 
+} .bt:hover{
+  background-color: blue;
+  color: white;
+  transform: scale(1.2)
+}
+
+.bt-like{
+  height: 30px; width: 60px;
+  border-radius: 7px; border: solid 0.5px #cecece;
+  padding: 2px;
+  margin: 5px;
+  color: #2e2e2e;
+  transition: background-color 0.5s ease, color 0.5s ease, transform 
+} .bt-like:hover{
+  background-color: rgb(35, 161, 62);
+  color: white;
+  font-weight: bold;
+  transform: scale(1.2)
+}
+
+.bt-share{
+  height: 30px;
+  width: 60px;
+  border-radius: 7px; border: solid 0.5px #cecece;
+  padding: 2px;
+  margin: 5px;
+  color: #2e2e2e;
+  transition: background-color 0.5s ease, color 0.5s ease, transform 
+} .bt-share:hover{
+  background-color:#2e2e2e;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.2)
+}
+
+
+.botao-transacoes{
+  color: white!important;
+  background-color: rgb(1, 138, 192)!important;
+}
+
+.botao-dashboard{
+  color: white!important;
+  background-color: rgb(224, 200, 17)!important;
+}
+
+.botao-cadastro{
+  color: white!important;
+  background-color: rgb(35, 161, 62)!important;
+}
+
+.botao-sair{
+  color: white!important;
+  background-color: rgb(255, 0, 0)!important;
+}
+
+.example-card {
+  max-width: 350px;
+  padding: 20px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  padding: 5px;
+}

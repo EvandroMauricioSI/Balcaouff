@@ -1,0 +1,76 @@
+<div [style]="carregando">
+  <mat-card class="card-container">
+    <mat-grid-list cols="12" rowHeight="100px" gutterSize="10px">
+
+      <mat-grid-tile colspan="4" rowspan="4">
+        <div class="profile-card">
+          <div class="image-container">
+            <input type="file" style="display: none;"
+            [accept]="requiredFileType"
+            (change)="onFileSelected($event)" #fileUpload>
+
+            <img [src]="img" alt="Foto do usuário" class="profile-image"/>
+            <div class="overlay" (click)="fileUpload.click()">
+              <span class="edit-text">Alterar Foto</span>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="8" rowspan="1">
+        <h1>Dados Cadastrais</h1>
+      </mat-grid-tile>
+
+      <form [formGroup]="dadosCadastrais">
+
+        <mat-grid-tile colspan="7">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
+              <mat-label>Nome de usuário</mat-label>
+                <input matInput formControlName="nome" type="text">
+              <mat-error>Preencha o campo.</mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="4">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
+              <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" type="text">
+              <mat-error>Preencha o campo.</mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
+              <mat-label>Ocupação</mat-label>
+                <input matInput formControlName="ocupacao" type="text">
+              <mat-error>Preencha o campo.</mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="4">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
+              <mat-label>Contato</mat-label>
+                <input matInput formControlName="contato" type="text">
+              <mat-error>Preencha o campo.</mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+
+      </form>
+
+    </mat-grid-list>
+
+    <mat-grid-list cols="12" rowHeight="50px" gutterSize="10px">
+      <mat-grid-tile colspan="11">
+
+        <div class="ajusteDireita">
+          <button mat-raised-button class="textoValido" (click)="retornar()" style="margin-right: 5px;"> Voltar </button>
+          <button mat-raised-button *ngIf="dadosCadastrais.valid" class="textoValido" (click)="enviarDados()"> Atualizar Dados </button>
+          <button mat-raised-button disabled *ngIf="!dadosCadastrais.valid" class="textoInvalido"> Atualizar Dados </button>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <br>
+
+  </mat-card>
+</div>
+

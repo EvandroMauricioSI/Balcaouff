@@ -1,43 +1,100 @@
+/* Estilos para o mat-card */
+.login-card {
+  width: 100%;
+  margin: auto;
+  margin-top: auto;
+  max-width: 400px; /* Limitar a largura do card */
+  border-radius: 12px; /* Borda arredondada */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  padding: 20px;
+}
 
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('/assets/fundoLogin.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-.login-container {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 32px;
-  width: 30%;
-  height:90%;
-  margin: 100px auto;
-  padding: 40px;
-  border-radius: 20px;
+.tituloCadastro{
   text-align: center;
-  background-color: rgb(240, 240, 240);
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #000000;
+  margin-bottom: 20px;
+  margin-right: -30px
 }
 
-.form-group {
-  text-align:left ;
-  margin-bottom: 30px;
-  margin-left: 40px;
-  font-size: 14px;
-  align-content:baseline;
+.textoValido{
+  font-size: 12px;
+  background-color: green!important;
+  color: white !important;;
 }
 
-input {
-  width: 90%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.textoInvalido{
+  font-size: 12px;
+  background-color: red!important;
+  color: white !important;;
 }
 
-.login-button {
-  width: 20%;
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.textoCadastro{
+  font-size: 12px;
+  background-color: rgb(0, 78, 114)!important;
+  color: white !important;;
 }
 
-.login-button:hover {
-  background-color: #012c5b;
+.ajusteDireita{
+  position: absolute;
+  right: 5px;
 }
+
+.ajusteEsquerda{
+  position: absolute;
+  left: 5px;
+}
+
+.icone_visualizar{
+  position: absolute;
+  right: 5px;
+  font-size: 23px;
+}
+
+mat-card-title h2{
+  width: 130%;
+}
+
+.tituloLogin {
+  text-align: center;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+/* Estilos para os botões */
+button {
+  width: 100%; /* Garantir que os botões ocupem toda a largura disponível */
+  margin-top: 10px; /* Espaçamento entre os botões */
+}
+
+.ajusteEsquerda, .ajusteDireita {
+  display: flex;
+  justify-content: center;
+}
+
+
+mat-form-field {
+  width: 100%;
+}
+
+
+
