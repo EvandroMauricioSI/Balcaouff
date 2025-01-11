@@ -15,7 +15,11 @@ categoria_model = categorias_ns.model(
 @categorias_ns.route("/", methods=["POST", "GET"])
 class CategoriaResource(Resource):
 
-    @categorias_ns.doc(description="Cadastro de nova categoria", body=categoria_model)
+    @categorias_ns.doc(
+        description="Cadastro de nova categoria", 
+        params={"token": helper.token_param},
+        body=categoria_model
+    )
     @helper.token_required_admin
     def post(self, usuario_atual):
         data = request.get_json()
@@ -32,7 +36,11 @@ class CategoriaResource(Resource):
         return response
 
     @categorias_ns.doc(
-        description="Captura dados da categoria, se tiver id_categoria, captura dados de uma categoria especifica"
+        description="Captura dados da categoria, se tiver id_categoria, captura dados de uma categoria especifica",
+        params={
+            "token": helper.token_param,
+            "id": "ID opcional da categoria a ser capturado."
+        }
     )
     @helper.token_required_admin
     def get(self, usuario_atual):
@@ -44,7 +52,9 @@ class CategoriaResource(Resource):
 class CategoriaDetailResource(Resource):
 
     @categorias_ns.doc(
-        description="Atualiza uma categoria existente", body=categoria_model
+        description="Atualiza uma categoria existente", 
+        params={"token": helper.token_param},
+        body=categoria_model
     )
     @helper.token_required_admin
     def put(self, usuario_atual, id_categoria):
@@ -60,7 +70,10 @@ class CategoriaDetailResource(Resource):
         response = categorias_controller.atualizar_categoria(id_categoria, novo_nome)
         return response
 
-    @categorias_ns.doc(description="Exclui uma categoria pelo ID.")
+    @categorias_ns.doc(
+        description="Exclui uma categoria pelo ID.",
+        params={"token": helper.token_param}
+    )
     @helper.token_required_admin
     def delete(self, usuario_atual, id_categoria):
         response = categorias_controller.deletar_categoria(id_categoria)
