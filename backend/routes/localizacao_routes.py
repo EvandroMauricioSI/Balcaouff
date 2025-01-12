@@ -44,11 +44,9 @@ class LocalizacaoResource(Resource):
         return response
 
     @localizacao_ns.doc(
-        description="Captura todas as localizações, dependendo do ID fornecido.",
-        params={"token": helper.token_param}
+        description="Captura todas as localizações, dependendo do ID fornecido."
     )
-    @helper.token_required_admin
-    def get(self, usuario_atual):
+    def get(self):
         id_localizacao = request.args.get("id_localizacao", default=None, type=int)
         return localizacao_controller.listar_localizacoes(id_localizacao)
 
