@@ -36,14 +36,9 @@ class CategoriaResource(Resource):
         return response
 
     @categorias_ns.doc(
-        description="Captura dados da categoria, se tiver id_categoria, captura dados de uma categoria especifica",
-        params={
-            "token": helper.token_param,
-            "id": "ID opcional da categoria a ser capturado."
-        }
+        description="Captura dados da categoria, se tiver id_categoria, captura dados de uma categoria especifica"
     )
-    @helper.token_required_admin
-    def get(self, usuario_atual):
+    def get(self):
         id_categoria = request.args.get("id_categoria", default=None, type=int)
         return categorias_controller.listar_categorias(id_categoria)
 

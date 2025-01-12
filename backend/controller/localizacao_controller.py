@@ -18,10 +18,10 @@ def listar_localizacoes(id_localizacao=None):
             localizacao = Localizacao.query.get(id_localizacao)
             if not localizacao:
                 return {"success": False, "data": "Local não encontrado!"}, 404
-            return {"success": True, "data": localizacao.json()}, 200
+            return {"success": True, "data": localizacao.to_dict()}, 200
 
         localizacao = Localizacao.query.all()
-        return {"success": True, "data": [a.json() for a in localizacao]}, 200
+        return {"success": True, "data": [a.to_dict() for a in localizacao]}, 200
     except Exception as e:
         return {"success": False, "data": str(e)}, 500
 
