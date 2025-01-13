@@ -12,6 +12,9 @@ const routes: Routes = [
   {path: 'login',component: LoginComponent},
   {path: 'perfil', loadChildren:()=> import('./myProfile/myProfile.module').then(m=> m.MyProfileModule), canActivate: [AuthGuard]},
   {path: 'meusAnuncios', loadChildren:()=> import('./myAdds/myAdds.module').then(m=> m.MyAddsModule)},
+  {path: 'categoria', loadChildren:()=> import('./shared/component/categoria/categoria.module').then(m=> m.CategoriaModule)},
+  {path: 'localizacao', loadChildren:()=> import('./shared/component/localizacao/localizacao.module').then(m=> m.LocalizacaoModule)},
+  {path: 'controleUsuarios', loadChildren:()=> import('./shared/component/controleUsuario/controle-usuario.module').then(m=> m.ControleUsuarioModule)},
 ];
 
 @NgModule({

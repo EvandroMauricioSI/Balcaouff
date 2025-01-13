@@ -34,25 +34,25 @@ api.add_namespace(categorias_ns, path="/api/categorias")
 
 with app.app_context():
     # Criando usuários de exemplo
-    user1 = Usuario(nome="João", email="joao@example.com",
+    user1 = Usuario(nome="João", email="joao@id.uff.br",
                     senha=generate_password_hash('admin'),
                     admin=True)
-    user2 = Usuario(nome="Maria", email="maria@example.com",
+    user2 = Usuario(nome="Maria", email="maria@id.uff.br",
                     senha=generate_password_hash('12345'),
                     admin=False)
-    user3 = Usuario(nome="Heleno", email="hellno@example.com",
+    user3 = Usuario(nome="Heleno", email="hellno@id.uff.br",
                     senha=generate_password_hash('12345'),
                     admin=False)
-    user4 = Usuario(nome="Ana Maria", email="anamaria@example.com",
+    user4 = Usuario(nome="Ana Maria", email="anamaria@id.uff.br",
                     senha=generate_password_hash('12345'),
                     admin=False)
-    user5 = Usuario(nome="Camila Alvarez", email="camialvarez@example.com",
+    user5 = Usuario(nome="Camila Alvarez", email="camialvarez@id.uff.br",
                     senha=generate_password_hash('12345'),
                     admin=False)
-    user6 = Usuario(nome="Pedro Silva", email="pedro.silva@example.com",
+    user6 = Usuario(nome="Pedro Silva", email="pedro.silva@id.uff.br",
                     senha=generate_password_hash('12345'),
                     admin=False)
-    user7 = Usuario(nome="Juliana Costa", email="juliana.costa@example.com",
+    user7 = Usuario(nome="Juliana Costa", email="juliana.costa@id.uff.br",
                     senha=generate_password_hash('admin'),
                     admin=True)
 

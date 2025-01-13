@@ -20,7 +20,7 @@ export class MyAddsEditComponent implements OnInit {
   carregando = this.data?.carregando ?? ''
   anuncio =  this.data?.dado ?? []
   editar = this.data?.editar ?? false
-  imagem = '/assets/fundoLogin.jpg'
+  imagem: null | string = null
   cadastro!:FormGroup
   fileName = '';
   listaDearquivos:any[] = []
@@ -83,14 +83,14 @@ export class MyAddsEditComponent implements OnInit {
 
       this.cadastro.patchValue({
         id_anuncio: this.anuncio.id_anuncio,
-        tipo: +this.anuncio.tipo,
+        tipo: this.anuncio.tipo,
         descricao: this.anuncio.descricao,
         preco: this.anuncio.preco,
         foto: this.anuncio.foto,
-        categoria: this.anuncio.categoria,
+        categoria: this.anuncio.categoria.id_categoria,
         condicao_produto: this.anuncio.condicao_produto,
         anunciante: this.anuncio.anunciante,
-        local: this.anuncio.local,
+        local: this.anuncio.local.id_localizacao,
       })
 
       this.carregando = ''
@@ -151,7 +151,7 @@ export class MyAddsEditComponent implements OnInit {
       foto: this.cadastro.get('foto')?.value,
       categoria: this.cadastro.get('categoria')?.value,
       condicao_produto: this.cadastro.get('condicao_produto')?.value,
-      anunciante: 1,
+      anunciante: this.sharedService.getIDusuario(),
       local: this.cadastro.get('local')?.value,
     }
 
@@ -177,6 +177,10 @@ export class MyAddsEditComponent implements OnInit {
     const ext = nome.split(/[.]/g)
     return ext[1]
 
+  }
+
+  retornaImagem(){
+    return this.imagem ?? 'assets/placeholderAnuncio.jpg'
   }
 
 }

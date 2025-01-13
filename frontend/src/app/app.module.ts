@@ -15,6 +15,8 @@ import localePt from '@angular/common/locales/pt';
 import { SharedModule } from './shared/SharedModule';
 import { HomePageComponent } from './homePage/homePage.component';
 import { NavegacaoComponent } from './navegacao/navegacao.component';
+import { AnuncioDetalhadoComponent } from './homePage/anuncioDetalhado/anuncioDetalhado.component';
+import { MandarEmailComponent } from './homePage/mandarEmail/mandarEmail.component';
 
 
 registerLocaleData(localePt);
@@ -25,6 +27,8 @@ registerLocaleData(localePt);
     AppComponent,
     LoginComponent,
     HomePageComponent,
+    AnuncioDetalhadoComponent,
+    MandarEmailComponent,
     NavegacaoComponent
    ],
   imports: [
@@ -33,8 +37,8 @@ registerLocaleData(localePt);
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     SharedModule,
+    BrowserAnimationsModule,
     FormsModule,
     ToastrModule.forRoot({positionClass:'toast-top-center'})
   ],

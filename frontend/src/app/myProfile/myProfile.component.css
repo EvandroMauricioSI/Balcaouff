@@ -141,15 +141,6 @@
 }
 
 
-.example-card {
-  max-width: 350px;
-}
-
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
-
 .description-content {
   overflow: hidden;
   font-size: 16px;
@@ -189,4 +180,29 @@
 
 .image-container:hover .overlay {
   opacity: 1;
+}
+
+.example-card {
+  width: 410px;
+  border: 1px solid black;
+}
+
+.example-header-image {
+  background-size: cover;
+  padding: 5px;
+  border: 1px solid white;
+}
+
+.cardAnuncio {
+  width: 409px;  /* Garante que o card ocupe 100% do tamanho da célula */
+  height: 352px; /* Garante que o card ocupe 100% da altura da célula */
+  background-size: cover;  /* Se houver uma imagem de fundo, ela será redimensionada para cobrir todo o card */
+  padding: 0;  /* Remove qualquer padding indesejado */
+  border: 1px solid rgb(0, 0, 0);
+}
+
+/* Ajuste específico para a imagem dentro do mat-card */
+.cardAnuncio img {
+  width: 100%;      /* A imagem vai ocupar toda a largura do card */
+  height: 100%;     /* A imagem vai ocupar toda a altura do card */
 }

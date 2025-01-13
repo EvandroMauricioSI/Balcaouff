@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ListarAnuncio } from './../../myAdds/model/anuncio';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-anuncioDetalhado',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnuncioDetalhadoComponent implements OnInit {
 
-  constructor() { }
+  imagem = '/src/assets/placeholder.png'
+  anuncio:ListarAnuncio = this.data.dado
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) @Optional() public data: any = '',
+  ) { }
 
   ngOnInit() {
+    console.log(this.anuncio.foto)
+    this.imagem = this.anuncio.foto
+  }
+
+  retornaImagem(imagem:string){
+    return imagem ?? 'assets/placeholderAnuncio.jpg'
+  }
+
+  retornaAnunciante(imagem:string){
+    return imagem ?? 'assets/placeholderUser.jpg'
   }
 
 }

@@ -2,7 +2,7 @@ import { Localizacao } from './../model/localizacao';
 import { ResponseAPI } from './../model/responseAPI';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Usuario } from '../model/usuario';
+import { Autenticacao, Usuario } from '../model/usuario';
 import { map, take } from 'rxjs';
 import { loginUser } from '../model/loginUsuario';
 import { Categoria } from '../model/categoria';
@@ -54,6 +54,16 @@ constructor(
       map((val) => val.data),
       take(1)
     );
+  }
+
+  getIDusuario(){
+    const user:Autenticacao = this.obterUsuario()
+    return user.id_usuario
+  }
+
+  getTokenUsuario(){
+    const user:Autenticacao = this.obterUsuario()
+    return user.token
   }
 
 }

@@ -1,8 +1,8 @@
 import { ResponseAPI } from './../../shared/model/responseAPI';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, take } from "rxjs";
-import { Anuncio } from '../model/anuncio';
+import { map, switchMap, take } from "rxjs";
+import { Anuncio, ListarAnuncio } from '../model/anuncio';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,29 @@ constructor(
   private http: HttpClient
 ) { }
 
+listarTodosAnuncios(id:number){
+  return this.http.get<ResponseAPI<ListarAnuncio[]>>(`api/anuncios/ativos`)
+  .pipe(
+    map((val) => val.data),
+    map((val) => val.filter((dado)=> dado.anunciante.id != id)),
+    take(1)
+  );
+}
+
 
   listarAnuncioUsuario(id:number){
-    return this.http.get<ResponseAPI<Anuncio[]>>(`api/anuncios/usuario/${id}`)
+    return this.http.get<ResponseAPI<ListarAnuncio[]>>(`api/anuncios/usuario/${id}`)
     .pipe(
       map((val) => val.data),
+      take(1)
+    );
+  }
+
+  listarAnuncioComprado(id:number){
+    return this.http.get<ResponseAPI<ListarAnuncio[]>>(`api/anuncios/`)
+    .pipe(
+      map((val) => val.data),
+      map((val) => val.filter((dado)=> +dado.comprador == id)),
       take(1)
     );
   }

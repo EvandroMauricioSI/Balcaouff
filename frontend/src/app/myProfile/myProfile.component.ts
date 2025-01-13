@@ -1,6 +1,12 @@
+import { SharedService } from './../shared/service/shared.service';
+import { Subscription, Observable, forkJoin } from 'rxjs';
+import { Anunciante } from './model/anunciante';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, INJECTOR, OnInit, Optional } from '@angular/core';
 import { Route, Router, ActivatedRoute } from '@angular/router';
+import { Anuncio, ListarAnuncio } from '../myAdds/model/anuncio';
+import { UsuarioService } from './service/usuario.service';
+import { MyAddsService } from '../myAdds/service/myAdds.service';
 
 @Component({
   selector: 'app-myProfile',
@@ -9,53 +15,57 @@ import { Route, Router, ActivatedRoute } from '@angular/router';
 })
 export class MyProfileComponent implements OnInit {
 
-  nomeUsuario = "Clairo Cottrill"
+  nomeUsuario!:string
   stars: number[] = this.criaVetor(this.calculoRating())
   rating: number = this.calculoRating();
   carregando = this.data?.carregando ?? ''
   visit = this.data?.visit ?? false
+  anunciante:Anunciante = this.data?.dado ?? false
 
-  anuncios = [
-    {
-      title: 'Bulldog',
-      subtitle: 'Raça de Cachorro',
-      image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-      description: 'O Bulldog Francês é uma raça de cachorro popular conhecida por sua personalidade amigável kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk kkkkkkkk...'
-    },
-    {
-      title: 'Bulldog',
-      subtitle: 'Raça de Cachorro',
-      image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-      description: 'O Bulldog Francês é uma raça de cachorro popular conhecida por sua personalidade amigável...'
-    },
-    {
-      title: 'Bulldog',
-      subtitle: 'Raça de Cachorro',
-      image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-      description: 'O Bulldog Francês é uma raça de cachorro popular conhecida por sua personalidade amigável...'
-    },
-    {
-      title: 'Bulldog',
-      subtitle: 'Raça de Cachorro',
-      image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-      description: 'O Bulldog Francês é uma raça de cachorro popular conhecida por sua personalidade amigável...'
-    },
-    // mais anúncios...
-  ];
+  anuncios:ListarAnuncio[] = [];
+  anunciosComprados:ListarAnuncio[] = [];
+  anuncios$!:Subscription
+  anunciosComprados$!:Subscription
 
   currentIndex: number = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) @Optional() public data: any = '',
     private route: ActivatedRoute,
+    private user: UsuarioService,
+    private shared: SharedService,
+    private add: MyAddsService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    if(this.anunciante){ //so pra ver o perfil
+      const id = +this.anunciante.id
+
+      this.anuncios$ = this.add.listarAnuncioUsuario(id).subscribe(
+          (dado) => {
+            this.anuncios = dado
+          }
+        )
+    } else { //perfil editavel
+      const anunciante:Observable<Anunciante> = this.user.listarUsuario(this.shared.getIDusuario())
+      const anuncios:Observable<ListarAnuncio[]> = this.add.listarAnuncioUsuario(this.shared.getIDusuario())
+      const anunciosC:Observable<ListarAnuncio[]> = this.add.listarAnuncioComprado(this.shared.getIDusuario())
+
+      forkJoin([anunciante, anuncios, anunciosC]).subscribe({
+        next: ([dado1, dado2, dado3]) => {
+          this.anunciante = dado1
+          this.anuncios = dado2
+          this.anunciosComprados = dado3
+        }
+      })
+    }
   }
 
-  editarPerfil() {
-    this.router.navigate(['12'], { relativeTo: this.route });
+  editarPerfil(id:number) {
+    if(id == this.shared.getIDusuario()){
+      this.router.navigate([`${id}`], { relativeTo: this.route });
+    }
   }
 
   calculoRating(){
@@ -73,17 +83,21 @@ export class MyProfileComponent implements OnInit {
 
   }
 
+  retornaOffset(){
+    return this.visit ?  2 : 3
+  }
+
   moveLeft() {
     if (this.currentIndex > 0) {
       this.currentIndex -= 1;
     } else {
-      this.currentIndex = Math.ceil(this.anuncios.length/3) - 1;  // Vai para o último conjunto
+      this.currentIndex = Math.ceil(this.anuncios.length/this.retornaOffset());  // Vai para o último conjunto
     }
     this.updateCarouselPosition();
   }
 
   moveRight() {
-    if (this.currentIndex < Math.ceil(this.anuncios.length/3) - 1) {
+    if (this.currentIndex < Math.ceil(this.anuncios.length/this.retornaOffset())) {
       this.currentIndex += 1;
     } else {
       this.currentIndex = 0;  // Vai para o primeiro conjunto
@@ -99,6 +113,15 @@ export class MyProfileComponent implements OnInit {
 
   abreAnuncio() {
     console.log('Abrir anúncio');
+  }
+
+  retornaFoto(foto:string){
+    console.log(foto)
+    return foto ?? "assets/placeholderUser.jpg"
+  }
+
+  imagemAnuncio(imagem:string){
+    return imagem ?? "assets/placeholderAnuncio.jpg"
   }
 
 }

@@ -7,25 +7,35 @@
         <mat-icon mat-list-icon class="ajusteTexto">home</mat-icon>
 				<span *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Home</span>
 			</mat-list-item>
-      
+
       <!--MEUS ANÚNCIOS-->
       <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/meusAnuncios">
         <mat-icon mat-list-icon class="ajusteTexto">ads_click</mat-icon>
 				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meus anuncios</span>
 			</mat-list-item>
-      
-      <!--MENSAGENS-->
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
-        <mat-icon mat-list-icon class="ajusteTexto">chat</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Mensagens</span>
-			</mat-list-item>
-      
+
       <!--MEU PERFIL-->
       <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/perfil">
         <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
 				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meu perfil</span>
 			</mat-list-item>
-      
+
+
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/localizacao">
+        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon> <!--mudar icone depois-->
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Localização</span>
+			</mat-list-item>
+
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/categoria">
+        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Categoria</span>
+			</mat-list-item>
+
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/controleUsuarios">
+        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
+				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Gerenciar Usuários</span>
+			</mat-list-item>
+
       <!--MEU PERFIL (CARD)-->
        <!--
       <span class="perfil" *ngIf="isExpanded || isShowing">
@@ -52,13 +62,13 @@
         <mat-icon mat-list-icon class="ajusteTexto">logout</mat-icon>
 				<span class="full-width" *ngIf="isExpanded || isShowing" (click)="logoff()">&nbsp;&nbsp;Sair</span>
 			</mat-list-item>
-      
+
       <!--ESPAÇO-->
       <div *ngIf="!isExpanded && !isShowing" style="height:50px"> </div>
-	
+
     </mat-nav-list>
   </mat-sidenav>
-	
+
   <div>
 		<router-outlet />
 	</div>
