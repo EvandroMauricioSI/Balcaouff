@@ -122,8 +122,7 @@ class ProcessarCompraResource(Resource):
 
     @anuncios_ns.doc(
         description="Atualiza o status de um anúncio para inativo após a compra.",
-        params={"id_anuncio": "ID do anúncio a ser processado",
-                "usuario": "ID do usuário que está comprando o anúncio"}
+        params={"id_anuncio": "ID do anúncio a ser processado"}
     )
     def put(self, id_anuncio):
         data = request.get_json()
