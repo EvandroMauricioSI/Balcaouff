@@ -1,0 +1,19 @@
+<div class="email-form">
+  <h2>Enviar e-mail</h2>
+
+  <div>
+    <label for="subject">Assunto:</label>
+    <input id="subject" [(ngModel)]="emailSubject" type="text" placeholder="Digite o assunto">
+  </div>
+
+  <div>
+    <label for="body">Corpo do e-mail:</label>
+    <textarea id="body" [(ngModel)]="emailBody" placeholder="Digite o conteúdo do e-mail"></textarea>
+  </div>
+
+  <div>
+    <a [href]="getMailtoLink()" target="_blank" class="send-button">
+      Enviar e-mail
+    </a>
+  </div>
+</div>

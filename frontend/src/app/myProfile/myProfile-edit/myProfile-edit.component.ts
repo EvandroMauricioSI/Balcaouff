@@ -2,7 +2,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, forkJoin } from 'rxjs';
+import { UsuarioService } from '../service/usuario.service';
+import { Anunciante } from '../model/anunciante';
+import { SharedService } from 'src/app/shared/service/shared.service';
 
 @Component({
   selector: 'app-myProfile-edit',
@@ -12,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class MyProfileEditComponent implements OnInit {
 
   carregando!:''
-  img = "https://tecoapple.com/wp-content/uploads/2019/05/clairobagsa019.jpg"
+  img = "assets/placeholderUser.jpg"
   fileName = '';
   uploadProgress!:number;
   uploadSub!: Subscription;
@@ -28,6 +31,8 @@ export class MyProfileEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private user: UsuarioService,
+    private shared: SharedService,
     private toast: ToastrService,
     private form: FormBuilder
   ) { }
@@ -35,13 +40,20 @@ export class MyProfileEditComponent implements OnInit {
   ngOnInit() {
 
     this.dadosCadastrais = this.form.group({
-      idUsuario: [null],
       nome: [null, [Validators.required]],
       email: [null, [Validators.required]],
-      isAdmin: [null],
       ocupacao: [null, [Validators.required]],
-      reputacao: [null],
-      contato: [null, [Validators.required]],
+      telefone: [null, [Validators.required]],
+      foto_de_perfil: [null]
+    })
+
+    const anunciante:Observable<Anunciante> = this.user.listarUsuario(this.shared.getIDusuario())
+
+    forkJoin([anunciante]).subscribe({
+      next: ([dado1]) => {
+        this.atualizarDados(dado1)
+
+      }
     })
   }
 
@@ -91,8 +103,32 @@ export class MyProfileEditComponent implements OnInit {
     }
   }
 
+  atualizarDados(dado:Anunciante){
+    this.dadosCadastrais.patchValue({
+      idUsuario: dado.id,
+      nome: dado.nome,
+      email: dado.email,
+      ocupacao: dado.ocupacao,
+      telefone: dado.telefone,
+    })
+    if(dado.foto_de_perfil){
+      this.dadosCadastrais.patchValue({
+        foto_de_perfil: dado.foto_de_perfil
+      })
+      this.img = dado.foto_de_perfil
+    }
+  }
+
   enviarDados(){
-    alert('foi')
+    this.dadosCadastrais.patchValue({
+      foto_de_perfil: this.img
+    })
+
+    const form = this.user.atualizarUsuario(this.dadosCadastrais.value).subscribe(
+      (dado) => {
+        this.toast.success('Dados atualizados com sucesso')
+      }
+    )
   }
 
   retornar(){
@@ -103,6 +139,18 @@ export class MyProfileEditComponent implements OnInit {
     const ext = nome.split(/[.]/g)
     return ext[1]
 
+  }
+
+  phoneNumber: string = '';
+
+  formatPhoneNumber() {
+    this.phoneNumber = this.phoneNumber.replace(/\D/g, '');
+
+    if (this.phoneNumber.length <= 10) {
+      this.phoneNumber = this.phoneNumber.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+    } else {
+      this.phoneNumber = this.phoneNumber.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+    }
   }
 
 }

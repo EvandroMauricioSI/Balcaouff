@@ -30,15 +30,14 @@
           <div class="carousel">
             <div class="carousel-item" *ngFor="let item of anuncios; let i = index">
               <mat-card class="example-card" appearance="outlined">
-                <mat-card-header>
-                  <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>{{ item.tipo }}</mat-card-title>
-                  <mat-card-subtitle>{{ item.descricao }}</mat-card-subtitle>
+                <mat-card-header style="background-color: black; color: white">
+                  <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + retornaFotoAnunciante(item.anunciante.foto_de_perfil) + ')'}"></div>
+                  <mat-card-title style="color: white">{{ item.tipo }}</mat-card-title>
+                  <mat-card-subtitle style="color: white">{{ item.categoria.nome }}</mat-card-subtitle>
                 </mat-card-header>
-                <img mat-card-image [src]="item.foto" alt="Imagem do anúncio">
+                <img class="cardAnuncio" mat-card-image [src]="imagemAnuncio(item.foto)" alt="Imagem do anúncio">
                 <mat-card-content class="description-content">
-                  <p>{{ item.local }}</p>
-                  <p>{{ item.descricao }}</p>
+                  <p>R$ {{item.preco}} - {{item.descricao}}</p>
                 </mat-card-content>
                 <mat-card-actions>
                   <button mat-button style="background-color: rgb(73, 117, 199);color:white;margin-right:5px" (click)="editarAnuncio(item)">EDITAR</button>
@@ -57,4 +56,5 @@
 
 
 </mat-card>
+
 

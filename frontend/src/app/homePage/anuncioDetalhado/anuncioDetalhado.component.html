@@ -1,3 +1,49 @@
-<p>
-  anuncioDetalhado works!
-</p>
+<mat-card class="card-container">
+
+  <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
+    <mat-grid-tile colspan="12">
+      <h1 style="font-size:42px" class="highlighted-text">{{anuncio.tipo}} - R$ {{anuncio.preco}}</h1>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="12" rowHeight="10px" gutterSize="10px">
+
+    <mat-grid-tile colspan="7" rowspan="30">
+      <div class="profile-card">
+        <mat-card class="example-card" appearance="outlined">
+          <img mat-card-image [src]="retornaImagem(anuncio.foto)">
+        </mat-card>
+
+        <mat-card class="example-card2" appearance="outlined">
+          <mat-card-header>
+            <div mat-card-avatar  class="example-header-image custom-avatar" [ngStyle]="{'background-image': 'url(' + retornaAnunciante(anuncio.anunciante.foto_de_perfil) + ')'}"></div>
+            <mat-card-title style="font-size: 20px;">Anunciante - {{anuncio.anunciante.nome}}</mat-card-title>
+            <mat-card-subtitle>Reputação - {{anuncio.avaliacao}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="5" rowspan="4" />
+
+    <mat-grid-tile colspan="5" rowspan="3">
+      <h2 class="sub-info">Categoria: {{anuncio.categoria.nome}}</h2>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="5" rowspan="3">
+      <h2 class="sub-info">Status do produto: {{anuncio.condicao_produto}}</h2>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="5" rowspan="3">
+      <h2 class="sub-info">Local de {{anuncio.tipo}}: {{anuncio.local.estado}} - {{anuncio.local.cidade}}, {{anuncio.local.bairro}}</h2>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="5" rowspan="20">
+      <div class="description">
+        <h2>Detalhes do anúncio: {{anuncio.descricao}}</h2>
+      </div>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</mat-card>

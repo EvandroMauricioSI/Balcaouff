@@ -16,7 +16,7 @@
                 [accept]="requiredFileType"
                 (change)="onFileSelected($event)" #fileUpload>
 
-                <img [src]="imagem" alt="Foto do usuário" class="profile-image" (click)="fileUpload.click()"/>
+                <img mat-card-image class="profile-image" [src]="retornaImagem()" alt="Photo of a Shiba Inu" (click)="fileUpload.click()">
 
 
           </mat-card>
@@ -27,7 +27,7 @@
           <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
             <mat-label>Tipo do Anuncio</mat-label>
             <mat-select  formControlName="tipo" >
-              <mat-option *ngFor="let item of anuncioTipo" [value]="item.id"> {{ item.nome }} </mat-option>
+              <mat-option *ngFor="let item of anuncioTipo" [value]="item.nome"> {{ item.nome }} </mat-option>
             </mat-select>
             <mat-error>Preencha o campo.</mat-error>
           </mat-form-field>

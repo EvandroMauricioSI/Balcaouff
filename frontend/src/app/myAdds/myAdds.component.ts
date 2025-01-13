@@ -1,11 +1,12 @@
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Anuncio } from './model/anuncio';
+import { Anuncio, ListarAnuncio } from './model/anuncio';
 import { Component, OnInit } from '@angular/core';
 import { MyAddsService } from './service/myAdds.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MyAddsEditComponent } from './myAddsEdit/myAddsEdit.component';
 import { DialogExcluirComponent } from '../shared/component/dialogExcluir/dialogExcluir.component';
+import { SharedService } from '../shared/service/shared.service';
 
 @Component({
   selector: 'app-myAdds',
@@ -16,12 +17,15 @@ export class MyAddsComponent implements OnInit {
 
   nomeUsuario = "Clairo Cottrill"
   currentIndex: number = 0;
-  anuncios: Anuncio[] = []
+  anuncios: ListarAnuncio[] = []
   anuncios$!:Subscription
   excluir$!:Subscription
+  imagem = 'assets/placeholderAnuncio.jpg'
+  imagemAnunciante = 'assets/placeholderUser.jpg'
 
   constructor(
     private service: MyAddsService,
+    private shared: SharedService,
     private dialog: MatDialog,
     private toast: ToastrService
   ) { }
@@ -31,7 +35,7 @@ export class MyAddsComponent implements OnInit {
   }
 
   listarAnuncios(){
-    this.anuncios$ = this.service.listarAnuncioUsuario(1).subscribe(
+    this.anuncios$ = this.service.listarAnuncioUsuario(this.shared.getIDusuario()).subscribe(
       (dado) => {
         console.log(dado)
         this.anuncios = dado
@@ -40,7 +44,7 @@ export class MyAddsComponent implements OnInit {
   }
 
   offset(){
-    return this.anuncios.length <= 3 ? 1 : 0
+    return this.anuncios.length <= 2 ? 1 : 0
   }
 
   moveLeft() {
@@ -98,7 +102,7 @@ export class MyAddsComponent implements OnInit {
 
   }
 
-  editarAnuncio(anuncio:Anuncio){
+  editarAnuncio(anuncio:ListarAnuncio){
 
     const dialogRef = this.dialog.open(MyAddsEditComponent, {
       width: '1000px',
@@ -129,7 +133,7 @@ export class MyAddsComponent implements OnInit {
 
   }
 
-  excluirAnuncio(anuncio:Anuncio){
+  excluirAnuncio(anuncio:ListarAnuncio){
 
     const id = anuncio.id_anuncio
     const vendido = anuncio.comprador ? true : false
@@ -149,6 +153,14 @@ export class MyAddsComponent implements OnInit {
       }
     })
 
+  }
+
+  imagemAnuncio(imagem:string){
+    return imagem ?? this.imagem
+  }
+
+  retornaFotoAnunciante(imagem:string){
+    return imagem ?? this.imagemAnunciante
   }
 
 

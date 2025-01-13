@@ -49,10 +49,11 @@
 
         <mat-grid-tile colspan="4">
           <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true" class="namebox">
-              <mat-label>Contato</mat-label>
-                <input matInput formControlName="contato" type="text">
-              <mat-error>Preencha o campo.</mat-error>
-            </mat-form-field>
+            <mat-label>Contato</mat-label>
+            <input matInput formControlName="telefone" type="text"
+              [(ngModel)]="phoneNumber" (input)="formatPhoneNumber()" maxlength="15" placeholder="Digite o número">
+            <mat-error>Preencha o campo.</mat-error>
+          </mat-form-field>
         </mat-grid-tile>
 
       </form>
