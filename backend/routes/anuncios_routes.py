@@ -116,12 +116,24 @@ class AnunciosPorUsuarioResource(Resource):
 @anuncios_ns.route("/<int:id_anuncio>/comprar", methods=["PUT"])
 class ProcessarCompraResource(Resource):
 
+    @anuncios_ns.expect(anuncios_ns.model('ProcessarCompra', {
+        'usuario': fields.Integer(required=True, description='Usuário que está comprando o anúncio')
+    }))
+
     @anuncios_ns.doc(
         description="Atualiza o status de um anúncio para inativo após a compra.",
-        params={"id_anuncio": "ID do anúncio a ser processado"}
+        params={"id_anuncio": "ID do anúncio a ser processado",
+                "usuario": "ID do usuário que está comprando o anúncio"}
     )
     def put(self, id_anuncio):
-        response = anuncios_controller.processar_compra(id_anuncio)
+        data = request.get_json()
+        if not data:
+            return {"success": False, "data": "Conteúdo da requisição não é JSON ou está vazio!"}, 400
+
+        usuario = data.get("usuario")
+        if usuario is None:
+            return {"success": False, "data": "Usuario não foi definido!"}, 400
+        response = anuncios_controller.processar_compra(id_anuncio, usuario)
         return response
 
 

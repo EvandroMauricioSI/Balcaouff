@@ -101,14 +101,15 @@ def listar_anuncios_por_usuario(usuario_id):
         return {"success": False, "data": str(e)}, 500
 
 
-def processar_compra(id_anuncio):
+def processar_compra(id_anuncio, usuario):
     try:
         anuncio = Anuncio.query.get(id_anuncio)
         if not anuncio:
             return {"success": False, "data": "Anúncio não encontrado!"}, 404
 
         # Atualizar o status para "inativo"
-        anuncio.status = "inativo"
+        anuncio.status = False
+        anuncio.comprador = usuario
 
         db.session.commit()
         return {"success": True, "data": anuncio.json()}, 200
