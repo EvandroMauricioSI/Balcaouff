@@ -7,7 +7,7 @@ def criar_localizacao(bairro, cidade, estado):
         nova_localizacao = Localizacao(bairro=bairro, cidade=cidade, estado=estado)
         db.session.add(nova_localizacao)
         db.session.commit()
-        return {"success": True, "data": nova_localizacao.json()}, 201
+        return {"success": True, "data": nova_localizacao.to_dict()}, 201
     except Exception as e:
         return {"success": False, "data": str(e)}, 500
 
@@ -38,7 +38,7 @@ def atualizar_localizacao(id_localizacao, data):
         db.session.commit()
         return {
             "success": True,
-            "data": localizacao.json(),
+            "data": localizacao.to_dict(),
         }, 200
     except Exception as e:
         return {"success": False, "data": str(e)}, 500
