@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f9;
+    color: #555;
+}
+
+.admin-radio {
+    display: none;
+}
+
+.admin-label {
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+#admin1-sim:checked + .admin-label,
+#admin2-sim:checked + .admin-label,
+#admin3-sim:checked + .admin-label,
+#admin4-sim:checked + .admin-label,
+#admin5-sim:checked + .admin-label,
+#admin6-sim:checked + .admin-label,
+#admin7-sim:checked + .admin-label {
+    background-color: #4CAF50; /* Verde para 'Sim' */
+    color: white;
+}
+
+#admin1-nao:checked + .admin-label,
+#admin2-nao:checked + .admin-label,
+#admin3-nao:checked + .admin-label,
+#admin4-nao:checked + .admin-label,
+#admin5-nao:checked + .admin-label,
+#admin6-nao:checked + .admin-label,
+#admin7-nao:checked + .admin-label {
+    background-color: #f44336; /* Vermelho para 'Não' */
+    color: white;
+}
+
+.admin-label:hover {
+    background-color: #ddd;
+}

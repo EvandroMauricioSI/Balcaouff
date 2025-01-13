@@ -1,3 +1,62 @@
-<p>
-  controleUsuario works!
-</p>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários Cadastrados</title>
+    <link rel="stylesheet" href="controleUsuario.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Usuários Cadastrados</h1>
+        <table id="usuarios-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Administrador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados dos usuários serão inseridos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Função para buscar usuários da API
+        async function fetchUsuarios() {
+            try {
+                // Fazendo a requisição para a API de usuários
+                const response = await fetch('/api/usuarios');
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar os usuários');
+                }
+                const usuarios = await response.json(); // Parse da resposta JSON
+                
+                // Preenchendo a tabela com os dados dos usuários
+                const tbody = document.querySelector('#usuarios-table tbody');
+                usuarios.forEach(usuario => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                        <td>
+                            <input type="radio" name="admin${usuario.id}" id="admin${usuario.id}-sim" class="admin-radio" ${usuario.admin ? 'checked' : ''}>
+                            <label for="admin${usuario.id}-sim" class="admin-label">Sim</label>
+                            <input type="radio" name="admin${usuario.id}" id="admin${usuario.id}-nao" class="admin-radio" ${!usuario.admin ? 'checked' : ''}>
+                            <label for="admin${usuario.id}-nao" class="admin-label">Não</label>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar os usuários:', error);
+            }
+        }
+
+        // Chama a função para carregar os dados quando a página carregar
+        window.onload = fetchUsuarios;
+    </script>
+</body>
+</html>

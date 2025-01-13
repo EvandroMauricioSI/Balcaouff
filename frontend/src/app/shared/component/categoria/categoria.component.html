@@ -1,3 +1,64 @@
-<p>
-  categoria works!
-</p>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria de Produtos</title>
+    <link rel="stylesheet" href="categoria.component.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cadastrar Categoria</h1>
+
+        <!-- Formulário para adicionar nova categoria -->
+        <div class="input-group">
+            <input type="text" id="categoryInput" placeholder="Digite o nome da categoria">
+            <button onclick="addCategory()">Nova Categoria</button>
+        </div>
+
+        <!-- Lista de categorias -->
+        <ul class="category-list" id="categoryList">
+            <!-- As categorias serão listadas aqui -->
+        </ul>
+    </div>
+
+    <script>
+        // Lista de categorias (poderia ser recuperado de um banco de dados)
+        let categories = [];
+
+        // Função para adicionar categoria
+        function addCategory() {
+            const categoryInput = document.getElementById('categoryInput');
+            const categoryName = categoryInput.value.trim();
+
+            if (categoryName) {
+                categories.push(categoryName);
+                categoryInput.value = ''; // Limpa o campo de entrada
+                updateCategoryList();
+            } else {
+                alert('Por favor, insira o nome da categoria.');
+            }
+        }
+
+        // Função para excluir categoria
+        function deleteCategory(index) {
+            categories.splice(index, 1);
+            updateCategoryList();
+        }
+
+        // Função para atualizar a lista de categorias na tela
+        function updateCategoryList() {
+            const categoryList = document.getElementById('categoryList');
+            categoryList.innerHTML = ''; // Limpa a lista antes de re-renderizar
+
+            categories.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.classList.add('category-item');
+                li.innerHTML = `${category} <button onclick="deleteCategory(${index})">Excluir</button>`;
+                categoryList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

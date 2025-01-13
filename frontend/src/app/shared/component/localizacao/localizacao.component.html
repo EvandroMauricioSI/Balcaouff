@@ -1,3 +1,78 @@
-<p>
-  localizacao works!
-</p>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Localização</title>
+    <link rel="stylesheet" href="localizacao.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastrar Localização</h1>
+
+        <!-- Formulário para adicionar nova localização -->
+        <div class="input-group">
+            <input type="text" id="estadoInput" placeholder="Digite o Estado">
+        </div>
+        <div class="input-group">
+            <input type="text" id="cidadeInput" placeholder="Digite a Cidade">
+        </div>
+        <div class="input-group">
+            <input type="text" id="bairroInput" placeholder="Digite o Bairro">
+        </div>
+
+        <!-- Botão para adicionar localização -->
+        <button onclick="addLocation()">OK</button>
+
+        <!-- Lista de localizações -->
+        <ul class="location-list" id="locationList">
+            <!-- As localizações serão listadas aqui -->
+        </ul>
+    </div>
+
+    <script>
+        // Lista de localizações (poderia ser recuperado de um banco de dados)
+        let locations = [];
+
+        // Função para adicionar localização
+        function addLocation() {
+            const estado = document.getElementById('estadoInput').value.trim();
+            const cidade = document.getElementById('cidadeInput').value.trim();
+            const bairro = document.getElementById('bairroInput').value.trim();
+
+            if (estado && cidade && bairro) {
+                const newLocation = `${bairro}, ${cidade} - ${estado}`;
+                locations.push(newLocation);
+
+                // Limpa os campos de entrada
+                document.getElementById('estadoInput').value = '';
+                document.getElementById('cidadeInput').value = '';
+                document.getElementById('bairroInput').value = '';
+
+                updateLocationList(); // Atualiza a lista de localizações
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+
+        // Função para excluir localização
+        function deleteLocation(index) {
+            locations.splice(index, 1);
+            updateLocationList();
+        }
+
+        // Função para atualizar a lista de localizações na tela
+        function updateLocationList() {
+            const locationList = document.getElementById('locationList');
+            locationList.innerHTML = ''; // Limpa a lista antes de re-renderizar
+
+            locations.forEach((location, index) => {
+                const li = document.createElement('li');
+                li.classList.add('location-item');
+                li.innerHTML = `${location} <button onclick="deleteLocation(${index})">Excluir</button>`;
+                locationList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
