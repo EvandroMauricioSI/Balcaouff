@@ -74,27 +74,28 @@
       </mat-grid-list>
 
 
-          <!-- Carrossel -->
-          <div class="carousel-container">
-            <div class="carousel">
-              <div class="carousel-item" *ngFor="let item of anunciosComprados; let i = index">
-                <mat-card class="example-card" appearance="outlined">
-                  <mat-card-header style="background-color: black; color: white">
-                    <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + retornaFoto(item.anunciante.foto_de_perfil) + ')'}"></div>
-                    <mat-card-title style="color: white">{{ item.tipo }}</mat-card-title>
-                    <mat-card-subtitle style="color: white">{{ item.categoria.nome }}</mat-card-subtitle>
-                  </mat-card-header>
-                  <img class="cardAnuncio" mat-card-image [src]="imagemAnuncio(item.foto)" alt="Imagem do anúncio">
-                  <mat-card-content class="description-content">
-                    <p>R$ {{item.preco}} - {{item.descricao}}</p>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-            </div>
-            <!-- Setas de Navegação -->
-            <button class="carousel-button left" (click)="moveLeft()">&#10094;</button>
-            <button class="carousel-button right" (click)="moveRight()">&#10095;</button>
-          </div>
+    <!-- Carrossel -->
+    <div class="carousel-container">
+      <div class="carousel2">
+        <div class="carousel-item" *ngFor="let item of anunciosComprados; let i = index">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header style="background-color: black; color: white">
+              <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + retornaFoto(item.anunciante.foto_de_perfil) + ')'}"></div>
+              <mat-card-title style="color: white">{{ item.tipo }}</mat-card-title>
+              <mat-card-subtitle style="color: white">{{ item.categoria.nome }}</mat-card-subtitle>
+            </mat-card-header>
+            <img class="cardAnuncio" mat-card-image [src]="imagemAnuncio(item.foto)" alt="Imagem do anúncio">
+            <mat-card-content class="description-content">
+              <p>R$ {{item.preco}} - {{item.descricao}}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <!-- Setas de Navegação -->
+      <button class="carousel-button left" (click)="moveLeft2()">&#10094;</button>
+      <button class="carousel-button right" (click)="moveRight2()">&#10095;</button>
+    </div>
+    <br><br><br>
 
           <div *ngIf="anunciosComprados.length == 0">
             <mat-grid-list cols="12" rowHeight="50px">
