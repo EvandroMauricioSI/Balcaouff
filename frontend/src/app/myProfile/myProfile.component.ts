@@ -28,6 +28,7 @@ export class MyProfileComponent implements OnInit {
   anunciosComprados$!:Subscription
 
   currentIndex: number = 0;
+  currentIndex2: number = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) @Optional() public data: any = '',
@@ -105,9 +106,33 @@ export class MyProfileComponent implements OnInit {
     this.updateCarouselPosition();
   }
 
+  moveLeft2() {
+    if (this.currentIndex2 > 0) {
+      this.currentIndex2 -= 1;
+    } else {
+      this.currentIndex2 = Math.ceil(this.anunciosComprados.length/this.retornaOffset());  // Vai para o último conjunto
+    }
+    this.updateCarouselPosition2();
+  }
+
+  moveRight2() {
+    if (this.currentIndex2 < Math.ceil(this.anunciosComprados.length/this.retornaOffset())) {
+      this.currentIndex2 += 1;
+    } else {
+      this.currentIndex2 = 0;  // Vai para o primeiro conjunto
+    }
+    this.updateCarouselPosition2();
+  }
+
   updateCarouselPosition() {
     const carousel = document.querySelector('.carousel') as HTMLElement;
     const offset = -(this.currentIndex * 33);  // Desloca os itens para a esquerda em 100% por vez -> 23 e a porcentagem
+    carousel.style.transform = `translateX(${offset}%)`;  // Aplica o deslocamento em % para cada conjunto
+  }
+
+  updateCarouselPosition2() {
+    const carousel = document.querySelector('.carousel2') as HTMLElement;
+    const offset = -(this.currentIndex2 * 33);  // Desloca os itens para a esquerda em 100% por vez -> 23 e a porcentagem
     carousel.style.transform = `translateX(${offset}%)`;  // Aplica o deslocamento em % para cada conjunto
   }
 

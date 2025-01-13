@@ -1,5 +1,6 @@
+import { SharedService } from 'src/app/shared/service/shared.service';
 import { ResponseAPI } from './../../shared/model/responseAPI';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, switchMap, take } from "rxjs";
 import { Anuncio, ListarAnuncio } from '../model/anuncio';
@@ -8,9 +9,11 @@ import { Anuncio, ListarAnuncio } from '../model/anuncio';
   providedIn: 'root'
 })
 export class MyAddsService {
+  idUser:number = this.shared.getIDusuario()
 
 constructor(
-  private http: HttpClient
+  private http: HttpClient,
+  private shared: SharedService
 ) { }
 
 listarTodosAnuncios(id:number){
@@ -35,7 +38,7 @@ listarTodosAnuncios(id:number){
     return this.http.get<ResponseAPI<ListarAnuncio[]>>(`api/anuncios/`)
     .pipe(
       map((val) => val.data),
-      map((val) => val.filter((dado)=> +dado.comprador == id)),
+      map((val) => val.filter((dado)=> +dado.comprador?.id == id)),
       take(1)
     );
   }
@@ -78,7 +81,17 @@ listarTodosAnuncios(id:number){
   }
 
   comprarAnuncio(id:number){
-    return this.http.put<ResponseAPI<any>>(`/api/anuncios/${id}/comprar`, true)
+    const user = {
+      usuario: this.idUser
+    }
+
+    const PARAMS = new HttpParams().set(
+      "usuario", this.idUser
+    )
+
+    return this.http.put<ResponseAPI<any>>(`/api/anuncios/${id}/comprar`, user, {
+      params: PARAMS
+    })
     .pipe(
       map((val) => val.data),
       take(1)

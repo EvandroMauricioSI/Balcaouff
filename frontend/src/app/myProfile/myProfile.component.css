@@ -113,6 +113,11 @@
   transition: transform 0.5s ease;
 }
 
+.carousel2 {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
 .carousel-item {
   flex: 0 0 23%;  /* Cada item ocupa 33% da largura do contêiner */
   box-sizing: border-box;  /* Inclui padding e bordas no cálculo da largura */
