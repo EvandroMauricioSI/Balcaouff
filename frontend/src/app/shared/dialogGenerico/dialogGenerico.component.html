@@ -1,4 +1,48 @@
-<mat-card style="width: 400px;height: 110px;">
+<mat-card style="width: 400px;height: 130px;" *ngIf="resposta!=true">
+  <mat-grid-list cols="12" rowHeight="40px" gutterSize="1px">
+    <mat-grid-tile colspan="12">
+      {{'Deseja adquirir o produto?'}}
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="12" rowHeight="60px" gutterSize="10px">
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+    <mat-grid-tile colspan="2">
+      <button class="botao" mat-raised-button color="primary" (click)="verifica(true)">Sim</button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2">
+      <button class="botao" mat-raised-button color="warn" [mat-dialog-close]="false">Não</button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
+
+
+<mat-card style="width: 400px;height: 130px;" *ngIf="resposta==true">
+  <mat-grid-list cols="12" rowHeight="40px" gutterSize="1px">
+    <mat-grid-tile colspan="12">
+      {{'Qual sua avaliação do produto?'}}
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="12" rowHeight="10px" gutterSize="10px">
+    <mat-grid-tile colspan="12" class="avaliacao" rowspan="2">
+        <ng-container class="stars" (mouseleave)="resetStars()">
+          <span *ngFor="let star of stars; let i = index"
+                [class.selected]="i < selectedRating"
+                (click)="setRating(i + 1)"
+                class="star">
+            &#9733;
+          </span>
+        </ng-container>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="12" rowspan="3">
+      <button class="botao" mat-raised-button color="primary" [mat-dialog-close]="selectedRating">Sim</button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
+
+
+<!--mat-card style="width: 400px;height: 110px;">
   <mat-grid-list cols="12" rowHeight="40px" gutterSize="1px">
     <mat-grid-tile colspan="12">
       {{'Deseja adquirir o produto?'}}
@@ -14,4 +58,4 @@
     </mat-grid-tile>
     <mat-grid-tile colspan="4"></mat-grid-tile>
   </mat-grid-list>
-</mat-card>
+</mat-card-->

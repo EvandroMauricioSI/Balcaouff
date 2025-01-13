@@ -217,3 +217,34 @@
 .image-container:hover .overlay {
   opacity: 1;
 }
+
+.bt-like{
+  height: 30px; width: 90px;
+  border-radius: 7px; border: solid 0.5px #cecece;
+  padding: 2px;
+  margin: 5px;
+  background-color: rgb(83, 162, 100);
+  color: #ffffff;
+  transition: background-color 0.5s ease, color 0.5s ease, transform
+} .bt-like:hover{
+  background-color: rgb(35, 161, 62);
+  color: white;
+  font-weight: bold;
+  transform: scale(1.2)
+}
+
+.bt-share{
+  height: 30px;
+  width: 120px;
+  border-radius: 7px; border: solid 0.5px #cecece;
+  padding: 2px;
+  margin: 5px;
+  color: #ffffff;
+  background-color:#467186;
+  transition: background-color 0.5s ease, color 0.5s ease, transform
+} .bt-share:hover{
+  background-color:#01557f;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.2)
+}

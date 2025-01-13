@@ -99,7 +99,7 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button class="bt-like">Comprar</button>
+            <button class="bt-like" (click)="comprarItem(item.id_anuncio)">Comprar</button>
             <button class="bt-share" (click)="enviarMensagem(item.anunciante.email)">Mensagem</button>
           </mat-card-actions>
         </mat-card>

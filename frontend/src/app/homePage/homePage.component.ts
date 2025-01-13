@@ -1,5 +1,6 @@
+import { ToastrService } from 'ngx-toastr';
 import { Categoria } from './../shared/model/categoria';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, forkJoin } from 'rxjs';
 import { Anunciante } from './../myProfile/model/anunciante';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,7 @@ import { ListarAnuncio } from '../myAdds/model/anuncio';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Localizacao } from '../shared/model/localizacao';
 import { MandarEmailComponent } from './mandarEmail/mandarEmail.component';
+import { DialogGenericoComponent } from '../shared/dialogGenerico/dialogGenerico.component';
 
 @Component({
   selector: 'app-homePage',
@@ -34,6 +36,8 @@ export class HomePageComponent implements OnInit {
   imagem = 'assets/placeholderAnuncio.jpg'
   imagemAnunciante = 'assets/placeholderUser.jpg'
   precoRange: number[] = [0, 0];
+  comprar$!:Observable<any>
+  avaliar$!:Observable<any>
 
   constructor(
     private sharedService: SharedService,
@@ -41,6 +45,7 @@ export class HomePageComponent implements OnInit {
     private responsive: BreakpointObserver,
     private form: FormBuilder,
     private dialog: MatDialog,
+    private toast: ToastrService,
     private router: Router
   ) { }
 
@@ -153,6 +158,30 @@ export class HomePageComponent implements OnInit {
 
       }
     });
+  }
+
+  comprarItem(item:number){
+    const dialogRef = this.dialog.open(DialogGenericoComponent, {
+      width: '401px',
+      height: '130px',
+      disableClose: true,
+    })
+
+    dialogRef.afterClosed().subscribe(val=>{
+      if(val){
+        console.log(val)
+        const aval = val
+        this.comprar$ = this.adds.comprarAnuncio(item)
+        this.avaliar$ = this.adds.avaliarAnuncio(item,aval)
+
+        forkJoin([this.comprar$, this.avaliar$]).subscribe({
+          next: ([dado1, dado2]) => {
+            this.toast.success("Parabéns! Você acaba de adquirir um novo item")
+            this.listarAnuncios()
+          }
+        })
+      }
+    })
   }
 
   enviarMensagem(email:string){

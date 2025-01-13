@@ -26,7 +26,7 @@ export interface ListarAnuncio{
   condicao_produto: string,
   avaliacao: number,
   anunciante: Anunciante,
-  comprador: string,
+  comprador: Anunciante,
   local: Localizacao,
   status: boolean
 }
