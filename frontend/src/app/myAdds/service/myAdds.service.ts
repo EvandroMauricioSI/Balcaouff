@@ -65,6 +65,27 @@ listarTodosAnuncios(id:number){
   }
 
 
+  avaliarAnuncio(id:number, avaliacao:number){
+    const submit = {
+      avaliacao: avaliacao
+    }
+
+    return this.http.put<ResponseAPI<any>>(`/api/anuncios/${id}/avaliar`, submit)
+    .pipe(
+      map((val) => val.data),
+      take(1)
+    );
+  }
+
+  comprarAnuncio(id:number){
+    return this.http.put<ResponseAPI<any>>(`/api/anuncios/${id}/comprar`, true)
+    .pipe(
+      map((val) => val.data),
+      take(1)
+    );
+  }
+
+
 
 }
 
