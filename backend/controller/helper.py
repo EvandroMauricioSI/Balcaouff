@@ -16,11 +16,11 @@ token_param = {
 
 def auth(email_usuario, senha_usuario):
     if not email_usuario or not senha_usuario:
-        return jsonify({"success": False, "data": "Faltam campos obrigatorios."})
+        return jsonify({"success": False, "data": "Faltam campos obrigatorios."}),400
     
     usuario = usuario_por_email(email_usuario)
     if not usuario:
-        return jsonify({"success": False, "data": "Usuario nao encontrado."})
+        return jsonify({"success": False, "data": "Usuario nao encontrado."}),400
     
     if usuario and check_password_hash(usuario.senha, senha_usuario):
         token = jwt.encode({
@@ -39,7 +39,7 @@ def auth(email_usuario, senha_usuario):
                         }
                         })
     
-    return jsonify({"success": False, "data": "Login necessario."})
+    return jsonify({"success": False, "data": "Login necessario."}),400
 
 def token_required(f):
     @wraps(f)
@@ -50,21 +50,21 @@ def token_required(f):
 
         token = request.args.get("token")
         if not token:
-            return jsonify({"success": False, "data": "Token e necessario."})
+            return jsonify({"success": False, "data": "Token e necessario."}),400
         
         try: 
             data = jwt.decode(token, key, algorithms=["HS256"])
             usuario_atual = usuario_por_id(id=data["id"])
 
         except jwt.ExpiredSignatureError:
-            return jsonify({"success": False, "data": "Token expirado."})
+            return jsonify({"success": False, "data": "Token expirado."}),400
         
         except jwt.DecodeError:
-            return jsonify({"success": False, "data": "Erro ao decodificar o token."})
+            return jsonify({"success": False, "data": "Erro ao decodificar o token."}),400
         
         except Exception as e:
             print(f"Erro inesperado: {e}")
-            return jsonify({"success": False, "data": "Token inválido ou erro ao processar."})
+            return jsonify({"success": False, "data": "Token inválido ou erro ao processar."}),400
         
         return f(self, usuario_atual, *args, **kwargs)
     
@@ -79,7 +79,7 @@ def token_required_admin(f):
 
         token = request.args.get("token")
         if not token:
-            return jsonify({"success": False, "data": "Token e necessario."})
+            return jsonify({"success": False, "data": "Token e necessario."}),400
         
         try: 
             data = jwt.decode(token, key, algorithms=["HS256"])
@@ -88,16 +88,16 @@ def token_required_admin(f):
             if usuario_atual.admin == True:
                 return f(self, usuario_atual, *args, **kwargs)
             else:
-                return jsonify({"success": False, "data": "Acesso negado."})
+                return jsonify({"success": False, "data": "Acesso negado."}),400
 
         except jwt.ExpiredSignatureError:
-            return jsonify({"success": False, "data": "Token expirado."})
+            return jsonify({"success": False, "data": "Token expirado."}),400
         
         except jwt.DecodeError:
-            return jsonify({"success": False, "data": "Erro ao decodificar o token."})
+            return jsonify({"success": False, "data": "Erro ao decodificar o token."}),400
         
         except Exception as e:
             print(f"Erro inesperado: {e}")
-            return jsonify({"success": False, "data": "Token inválido ou erro ao processar."})
+            return jsonify({"success": False, "data": "Token inválido ou erro ao processar."}),400
     
     return decorated
