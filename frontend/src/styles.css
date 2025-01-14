@@ -131,3 +131,16 @@ input::-webkit-inner-spin-button {
   background: rgba(0, 0, 0, 0.4);
 }
 /*****************************/
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('/assets/fundo_projeto.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff; /* Texto branco para contraste */
+  font-family: 'Roboto', sans-serif;
+}

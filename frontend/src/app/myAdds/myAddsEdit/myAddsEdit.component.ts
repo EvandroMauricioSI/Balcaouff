@@ -167,7 +167,7 @@ export class MyAddsEditComponent implements OnInit {
     } else {
       this.$salvarAnuncio = this.service.cadastrarAnuncio(formulario).subscribe(
         (dado) => {
-          this.toast.success(dado)
+          this.toast.success("Anuncio Adicionado")
         }
       )
     }

@@ -40,6 +40,7 @@ export class HomePageComponent implements OnInit {
   comprar$!:Observable<any>
   avaliar$!:Observable<any>
 
+
   constructor(
     private sharedService: SharedService,
     private adds: MyAddsService,
@@ -78,6 +79,7 @@ export class HomePageComponent implements OnInit {
     })
 
     this.listarAnuncios()
+    
   }
 
   listarAnuncios(){
@@ -91,7 +93,9 @@ export class HomePageComponent implements OnInit {
 
   logout(){
     localStorage.clear()
-    this.router.navigate(['/login'])
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => this.router.navigate(['/login']))
+    //this.router.navigate(['/login'])
   }
 
   transacoes(){

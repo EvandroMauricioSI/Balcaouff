@@ -16,8 +16,8 @@ import { MyAddsService } from '../myAdds/service/myAdds.service';
 export class MyProfileComponent implements OnInit {
 
   nomeUsuario!:string
-  stars: number[] = this.criaVetor(this.calculoRating())
-  rating: number = this.calculoRating();
+  stars!: number[]// = this.criaVetor(this.calculoRating())
+  rating!: number// = this.calculoRating();
   carregando = this.data?.carregando ?? ''
   visit = this.data?.visit ?? false
   anunciante:Anunciante = this.data?.dado ?? false
@@ -29,6 +29,7 @@ export class MyProfileComponent implements OnInit {
 
   currentIndex: number = 0;
   currentIndex2: number = 0;
+  user$!:Subscription
 
   constructor(
     @Inject(MAT_DIALOG_DATA) @Optional() public data: any = '',
@@ -46,6 +47,7 @@ export class MyProfileComponent implements OnInit {
       this.anuncios$ = this.add.listarAnuncioUsuario(id).subscribe(
           (dado) => {
             this.anuncios = dado
+            this.calculoRating(id)
           }
         )
     } else { //perfil editavel
@@ -58,6 +60,7 @@ export class MyProfileComponent implements OnInit {
           this.anunciante = dado1
           this.anuncios = dado2
           this.anunciosComprados = dado3
+          this.calculoRating(this.shared.getIDusuario())
         }
       })
     }
@@ -69,10 +72,10 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  calculoRating(){
+  /*calculoRating(){
     const numero = 4.4527468456965 //nota baixa pq ela nao vem pro Brasil
     return parseFloat(numero.toFixed(1));
-  }
+  }*/
 
   criaVetor(tamanho:number){
     tamanho = Math.floor(tamanho)
@@ -147,6 +150,15 @@ export class MyProfileComponent implements OnInit {
 
   imagemAnuncio(imagem:string){
     return imagem ?? "assets/placeholderAnuncio.jpg"
+  }
+
+  calculoRating(id:number){
+    this.user$ = this.add.calculoRating(id).subscribe(
+      (dado) => {
+        this.rating = dado
+        this.stars = this.criaVetor(dado)
+      }
+    )
   }
 
 }

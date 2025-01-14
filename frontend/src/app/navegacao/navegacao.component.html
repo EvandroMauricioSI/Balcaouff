@@ -9,12 +9,12 @@
           </div>
           <div class="profile-details">
             <h2 class="profile-name">{{user.nome}}</h2>
-            <!--p class="profile-name">{{rating}}</p-->
-            <!--div class="star-rating">
+            <p class="profile-name">{{rating}}</p>
+            <div class="star-rating">
               <mat-icon *ngFor="let star of stars; let i = index">
                 star
               </mat-icon>
-            </div-->
+            </div>
           </div>
         </mat-card>
         <br><br>
@@ -41,17 +41,17 @@
       <div *ngIf="admin">
 
         <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/localizacao">
-          <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon> <!--mudar icone depois-->
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon> <!--mudar icone depois-->
           <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Localização</span>
         </mat-list-item>
 
         <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/categoria">
-          <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon>
           <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Categoria</span>
         </mat-list-item>
 
         <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/controleUsuarios">
-          <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon>
           <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Gerenciar Usuários</span>
         </mat-list-item>
 

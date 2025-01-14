@@ -1,19 +1,19 @@
 import { MyAddsService } from './../myAdds/service/myAdds.service';
 import { Anunciante } from './../myProfile/model/anunciante';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UsuarioService } from '../myProfile/service/usuario.service';
-import { Usuario } from '../shared/model/usuario';
+
 
 @Component({
   selector: 'app-navegacao',
   templateUrl: './navegacao.component.html',
   styleUrls: ['./navegacao.component.css']
 })
-export class NavegacaoComponent implements OnInit, AfterViewInit {
+export class NavegacaoComponent implements OnInit, OnDestroy {
 
   opened!: boolean;
   panelOpenState = false;
@@ -25,10 +25,10 @@ export class NavegacaoComponent implements OnInit, AfterViewInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   admin!:boolean
-  //rating: number = this.calculoRating();
+  rating!: number
 
   // Criando um array de 5 estrelas
-  //stars: number[] = this.criaVetor(this.calculoRating())
+  stars!: number[]
   user$!:Subscription
   user!:Anunciante
 
@@ -46,24 +46,25 @@ export class NavegacaoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.router.events.subscribe(() => {
       console.log(this.router.url)
-      if (this.router.url === '/login') {
+      if (this.router.url === '/login' || this.router.url === '/') {
         this.showSidenav = false
       } else {
         this.obtemDados()
         this.showSidenav = true
       }
     });
-
-
   }
 
   obtemDados(){
     this.admin = this.shared.getAdmin()
-    this.user$ = this.usuario.listarUsuario(this.shared.getIDusuario()).subscribe(
-      (dado) => {
-        this.user	= dado
-      }
-    )
+    setTimeout(()=>{
+      this.user$ = this.usuario.listarUsuario(this.shared.getIDusuario()).subscribe(
+        (dado) => {
+          this.user	= dado
+          this.calculoRating()
+        }
+      )
+    },500)
   }
 
 
@@ -94,7 +95,12 @@ export class NavegacaoComponent implements OnInit, AfterViewInit {
   }
 
   calculoRating(){
-    return this.add.calculoRating(this.shared.getIDusuario())
+    this.user$ = this.add.calculoRating(this.shared.getIDusuario()).subscribe(
+      (dado) => {
+        this.rating = dado
+        this.stars = this.criaVetor(dado)
+      }
+    )
   }
 
   /*calculoRating(){
@@ -123,10 +129,8 @@ export class NavegacaoComponent implements OnInit, AfterViewInit {
     return foto ?? 'assets/placeholderUser.jpg'
   }
 
-  ngAfterViewInit() {
-    // Força uma nova detecção de mudanças após a inicialização da view
-    this.cdr.detectChanges();
-    this.admin = this.shared.getAdmin()
+  ngOnDestroy(): void {
+    this.user$.unsubscribe()
   }
 
 }
