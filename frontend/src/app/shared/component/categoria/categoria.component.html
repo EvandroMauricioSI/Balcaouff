@@ -1,64 +1,72 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoria de Produtos</title>
-    <link rel="stylesheet" href="categoria.component.css">
-</head>
 
-<body>
+
+  <mat-card class="cardCampos">
     <div class="container">
-        <h1>Cadastrar Categoria</h1>
+      <h1>Cadastrar Categoria</h1>
+      <form [formGroup]="categoria">
+            <!-- Formulário para adicionar nova categoria -->
+          <div class="input-group">
+            <input type="text" id="categoryInput" formControlName="nome" placeholder="Digite o nome da categoria">
+            <button mat-raised-button class="textoInvalido" *ngIf="!categoria.valid">Cadastrar Categoria</button>
+            <button mat-raised-button class="textoValido" (click)="inserirCategoria()" *ngIf="categoria.valid">Cadastrar Categoria</button>
+          </div>
 
-        <!-- Formulário para adicionar nova categoria -->
-        <div class="input-group">
-            <input type="text" id="categoryInput" placeholder="Digite o nome da categoria">
-            <button onclick="addCategory()">Nova Categoria</button>
-        </div>
+      </form>
 
-        <!-- Lista de categorias -->
-        <ul class="category-list" id="categoryList">
-            <!-- As categorias serão listadas aqui -->
-        </ul>
+      <!-- Lista de categorias -->
+      <ul class="category-list" id="categoryList">
+          <!-- As categorias serão listadas aqui -->
+      </ul>
     </div>
+  </mat-card>
 
-    <script>
-        // Lista de categorias (poderia ser recuperado de um banco de dados)
-        let categories = [];
+  <mat-card class="cardCampos">
+    <section class="container2" tabindex="0">
 
-        // Função para adicionar categoria
-        function addCategory() {
-            const categoryInput = document.getElementById('categoryInput');
-            const categoryName = categoryInput.value.trim();
 
-            if (categoryName) {
-                categories.push(categoryName);
-                categoryInput.value = ''; // Limpa o campo de entrada
-                updateCategoryList();
-            } else {
-                alert('Por favor, insira o nome da categoria.');
-            }
-        }
+      <table mat-table [dataSource]="dados" (scroll)="tableScroll($event)">
 
-        // Função para excluir categoria
-        function deleteCategory(index) {
-            categories.splice(index, 1);
-            updateCategoryList();
-        }
 
-        // Função para atualizar a lista de categorias na tela
-        function updateCategoryList() {
-            const categoryList = document.getElementById('categoryList');
-            categoryList.innerHTML = ''; // Limpa a lista antes de re-renderizar
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef> DESCRIÇÃO </th>
+        <td mat-cell *matCellDef="let element">
+            {{element.nome}}
+        </td>
+      </ng-container>
 
-            categories.forEach((category, index) => {
-                const li = document.createElement('li');
-                li.classList.add('category-item');
-                li.innerHTML = `${category} <button onclick="deleteCategory(${index})">Excluir</button>`;
-                categoryList.appendChild(li);
-            });
-        }
-    </script>
-</body>
-</html>
+
+      <ng-container matColumnDef="alteracao">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element">
+
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="editar(element)">
+                  <mat-icon class="icone">edit</mat-icon>
+                  <span class="textoSelecao">Editar Categoria</span>
+                </button>
+                <button mat-menu-item (click)="remover(element.id_categoria)">
+                  <mat-icon class="icone">delete</mat-icon>
+                  <span class="textoSelecao">Excluir Categoria</span>
+                </button>
+              </mat-menu>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="colunasTabela; sticky: true"></tr>
+      <tr mat-row *matRowDef="let linhas; columns: colunasTabela;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell centered-cell" colspan="6">Não há informações</td>
+      </tr>
+
+    </table>
+    </section>
+  </mat-card>
+
+
+
+

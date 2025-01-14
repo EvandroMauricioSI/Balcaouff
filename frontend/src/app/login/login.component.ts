@@ -161,10 +161,9 @@ export class LoginComponent implements OnInit {
 
       this.conexaoAPI$ = this.service.loginUsuario(formulario).subscribe({
         next: (dado) => {
-          //window.location.reload();
           console.log('Resposta: ', dado)
           localStorage.setItem('usuario', JSON.stringify(dado))
-          this.router.navigate(['/'])
+          this.router.navigate(['/home'])
         }
       })
     }

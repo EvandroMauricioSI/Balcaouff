@@ -10,6 +10,7 @@ import { Anuncio, ListarAnuncio } from '../model/anuncio';
 })
 export class MyAddsService {
   idUser:number = this.shared.getIDusuario()
+  total!:number
 
 constructor(
   private http: HttpClient,
@@ -22,6 +23,24 @@ listarTodosAnuncios(id:number){
     map((val) => val.data),
     map((val) => val.filter((dado)=> dado.anunciante.id != id)),
     take(1)
+  );
+}
+
+listarAvaliacaoAnuncios(id: number) {
+  return this.http.get<ResponseAPI<ListarAnuncio[]>>(`api/anuncios/`).pipe(
+    map((val) => val.data),
+    map((val) => val.filter((dado) => dado.anunciante.id != id && dado.avaliacao != null)),
+    take(1)
+  );
+}
+
+calculoRating(id: number) {
+  return this.listarAvaliacaoAnuncios(id).pipe(
+    map((listagem) => {
+      const total = listagem.reduce((acc, element) => acc + element.avaliacao, 0);
+      const media = listagem.length > 0 ? total / listagem.length : 5;
+      return parseFloat(media.toFixed(1));
+    })
   );
 }
 

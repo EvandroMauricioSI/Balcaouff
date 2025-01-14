@@ -17,6 +17,7 @@ import { Localizacao } from '../shared/model/localizacao';
 import { MandarEmailComponent } from './mandarEmail/mandarEmail.component';
 import { DialogGenericoComponent } from '../shared/dialogGenerico/dialogGenerico.component';
 
+
 @Component({
   selector: 'app-homePage',
   templateUrl: './homePage.component.html',
@@ -38,6 +39,7 @@ export class HomePageComponent implements OnInit {
   precoRange: number[] = [0, 0];
   comprar$!:Observable<any>
   avaliar$!:Observable<any>
+
 
   constructor(
     private sharedService: SharedService,
@@ -77,6 +79,7 @@ export class HomePageComponent implements OnInit {
     })
 
     this.listarAnuncios()
+    
   }
 
   listarAnuncios(){
@@ -90,7 +93,9 @@ export class HomePageComponent implements OnInit {
 
   logout(){
     localStorage.clear()
-    this.router.navigate(['/login'])
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => this.router.navigate(['/login']))
+    //this.router.navigate(['/login'])
   }
 
   transacoes(){

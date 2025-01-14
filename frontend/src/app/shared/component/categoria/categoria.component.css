@@ -55,22 +55,6 @@ input[type="text"]:focus {
     outline: none;
 }
 
-button {
-    width: 20%;
-    padding: 12px;
-    background-color: #67d36b;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-button:hover {
-    background-color: #0d7512;
-    transform: scale(1.05);
-}
 
 /* Lista de categorias */
 .category-list {
@@ -136,4 +120,36 @@ button:hover {
         width: 100%;
         margin-top: 10px;
     }
+}
+
+.container2{
+  overflow: auto;
+  height: 400px;
+  width: 100%;
+}
+
+th, td{
+  /*font-family: 'Silka'!important;*/
+  font-size: 12px;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px!important;
+  height: 5px!important;
+}
+
+::-webkit-scrollbar-track{
+  border-left: 5px solid white;
+  border-right: 5px solid white;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#001c43!important;
+  border-radius: 5px!important;
+}
+
+.centered-cell {
+  text-align: center;
+  padding-top: 20px
 }

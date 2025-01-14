@@ -21,6 +21,8 @@ export class UsuarioService {
 
 
   listarUsuario(id:number){
+    this.token = this.service?.getTokenUsuario()
+
     const PARAMS = new HttpParams().set(
       "token", this.token
     ).set(

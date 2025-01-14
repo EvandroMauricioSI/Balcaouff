@@ -1,124 +1,156 @@
 /* Estilos globais */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7fc;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  overflow: hidden;
 }
+
 .container {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 900px;
-    box-sizing: border-box;
-    transition: transform 0.3s ease;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 40px;
+  width: 90%;
+  max-width: 900px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
 }
-h1 {    /* Títulos */
-    color: #000000;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: 1px;
+
+
+/* Títulos */
+h1 {
+  color: #000000;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
-.input-group {  /* Formulário de Adição de Localização */
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+/* Formulário de Adição de Categoria */
+.input-group {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
+  width: 75%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 input[type="text"]:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+  border-color: #28e22f;
+  outline: none;
 }
 
-/* Lista de localizações */
-.location-list {
-    margin-top: 20px;
-    list-style-type: none;
-    padding: 0;
-}
-.location-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #f9f9f9;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.location-item:hover {
-    transform: translateX(10px);
-}
-.location-item button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: background-color 0.3s, transform 0.3s;
+
+/* Lista de categorias */
+.category-list {
+  margin-top: 20px;
+  list-style-type: none;
+  padding: 0;
 }
 
-.location-item button:hover {
-    background-color: #c0392b;
-    transform: scale(1.1);
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-item button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.category-item button:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .container {
-        padding: 30px;
-    }
+  .container {
+      padding: 30px;
+  }
 
-    input[type="text"] {
-        width: 100%;
-        font-size: 14px;
-    }
+  input[type="text"] {
+      width: 70%;
+      font-size: 14px;
+  }
 
-    button {
-        width: 100%;
-    }
+  button {
+      width: 25%;
+  }
 
-    .location-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .category-item {
+      flex-direction: column;
+      align-items: flex-start;
+  }
 
-    .location-item button {
-        width: 100%;
-        margin-top: 10px;
-    }
+  .category-item button {
+      width: 100%;
+      margin-top: 10px;
+  }
+}
+
+
+.container2{
+  overflow: auto;
+  height: 400px;
+  width: 100%;
+}
+
+th, td{
+  /*font-family: 'Silka'!important;*/
+  font-size: 12px;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px!important;
+  height: 5px!important;
+}
+
+::-webkit-scrollbar-track{
+  border-left: 5px solid white;
+  border-right: 5px solid white;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#001c43!important;
+  border-radius: 5px!important;
+}
+
+.centered-cell {
+  text-align: center;
+  padding-top: 20px
 }

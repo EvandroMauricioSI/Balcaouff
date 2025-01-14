@@ -2,8 +2,26 @@
 	<mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
 		<mat-nav-list>
 
+      <span class="perfil" *ngIf="isExpanded || isShowing">
+        <mat-card class="profile-card">
+          <div class="image-container">
+            <img [src]="retornaFoto(user.foto_de_perfil)" alt="Foto do usuário" class="profile-image"/>
+          </div>
+          <div class="profile-details">
+            <h2 class="profile-name">{{user.nome}}</h2>
+            <p class="profile-name">{{rating}}</p>
+            <div class="star-rating">
+              <mat-icon *ngFor="let star of stars; let i = index">
+                star
+              </mat-icon>
+            </div>
+          </div>
+        </mat-card>
+        <br><br>
+      </span>
+
       <!--HOME-->
-			<mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="">
+			<mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/home">
         <mat-icon mat-list-icon class="ajusteTexto">home</mat-icon>
 				<span *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Home</span>
 			</mat-list-item>
@@ -20,41 +38,28 @@
 				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Meu perfil</span>
 			</mat-list-item>
 
+      <div *ngIf="admin">
 
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/localizacao">
-        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon> <!--mudar icone depois-->
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Localização</span>
-			</mat-list-item>
+        <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/localizacao">
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon> <!--mudar icone depois-->
+          <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Localização</span>
+        </mat-list-item>
 
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/categoria">
-        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Categoria</span>
-			</mat-list-item>
+        <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/categoria">
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon>
+          <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Cadastrar Categoria</span>
+        </mat-list-item>
 
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/controleUsuarios">
-        <mat-icon mat-list-icon class="ajusteTexto">account_circle</mat-icon>
-				<span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Gerenciar Usuários</span>
-			</mat-list-item>
+        <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent" routerLink="/controleUsuarios">
+          <mat-icon mat-list-icon class="ajusteTexto">settings</mat-icon>
+          <span class="full-width" *ngIf="isExpanded || isShowing">&nbsp;&nbsp;Gerenciar Usuários</span>
+        </mat-list-item>
+
+      </div>
 
       <!--MEU PERFIL (CARD)-->
        <!--
-      <span class="perfil" *ngIf="isExpanded || isShowing">
-        <mat-card class="profile-card">
-          <div class="image-container">
-            <img src="https://tecoapple.com/wp-content/uploads/2019/05/clairobagsa019.jpg" alt="Foto do usuário" class="profile-image"/>
-          </div>
-          <div class="profile-details">
-            <h2 class="profile-name">{{nomeUsuario}}</h2>
-            <p class="profile-name">{{rating}}</p>
-            <div class="star-rating">
-              <mat-icon *ngFor="let star of stars; let i = index">
-                star
-              </mat-icon>
-            </div>
-          </div>
-        </mat-card>
-        <br><br>
-      </span>
+
       -->
 
       <!--SAIR-->

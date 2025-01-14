@@ -1,78 +1,88 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Localização</title>
-    <link rel="stylesheet" href="localizacao.component.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Cadastrar Localização</h1>
+<mat-card class="cardCampos">
 
-        <!-- Formulário para adicionar nova localização -->
+  <div class="container">
+    <h1>Cadastrar Localização</h1>
+    <form [formGroup]="localizacao">
+          <!-- Formulário para adicionar nova localização -->
         <div class="input-group">
-            <input type="text" id="estadoInput" placeholder="Digite o Estado">
+          <input type="text" id="bairroInput" formControlName="bairro" placeholder="Digite o bairro">
         </div>
         <div class="input-group">
-            <input type="text" id="cidadeInput" placeholder="Digite a Cidade">
+          <input type="text" id="cidadeInput" formControlName="cidade" placeholder="Digite a cidade">
         </div>
         <div class="input-group">
-            <input type="text" id="bairroInput" placeholder="Digite o Bairro">
+          <input type="text" id="estadoInput" formControlName="estado" placeholder="Digite o estado">
         </div>
+        <button mat-raised-button class="textoInvalido" *ngIf="!localizacao.valid">Cadastrar Localização</button>
+        <button mat-raised-button class="textoValido" (click)="inserirLocalizacao()" *ngIf="localizacao.valid">Cadastrar Localização</button>
+    </form>
 
-        <!-- Botão para adicionar localização -->
-        <button onclick="addLocation()">OK</button>
+    <!-- Lista de localizações -->
+    <ul class="category-list" id="categoryList">
+        <!-- As localizações serão listadas aqui -->
+    </ul>
 
-        <!-- Lista de localizações -->
-        <ul class="location-list" id="locationList">
-            <!-- As localizações serão listadas aqui -->
-        </ul>
-    </div>
+  </div>
 
-    <script>
-        // Lista de localizações (poderia ser recuperado de um banco de dados)
-        let locations = [];
 
-        // Função para adicionar localização
-        function addLocation() {
-            const estado = document.getElementById('estadoInput').value.trim();
-            const cidade = document.getElementById('cidadeInput').value.trim();
-            const bairro = document.getElementById('bairroInput').value.trim();
 
-            if (estado && cidade && bairro) {
-                const newLocation = `${bairro}, ${cidade} - ${estado}`;
-                locations.push(newLocation);
+</mat-card>
 
-                // Limpa os campos de entrada
-                document.getElementById('estadoInput').value = '';
-                document.getElementById('cidadeInput').value = '';
-                document.getElementById('bairroInput').value = '';
+<mat-card class="cardCampos">
+  <section class="container2" tabindex="0">
 
-                updateLocationList(); // Atualiza a lista de localizações
-            } else {
-                alert('Por favor, preencha todos os campos.');
-            }
-        }
 
-        // Função para excluir localização
-        function deleteLocation(index) {
-            locations.splice(index, 1);
-            updateLocationList();
-        }
+    <table mat-table [dataSource]="dados" (scroll)="tableScroll($event)">
 
-        // Função para atualizar a lista de localizações na tela
-        function updateLocationList() {
-            const locationList = document.getElementById('locationList');
-            locationList.innerHTML = ''; // Limpa a lista antes de re-renderizar
+      <ng-container matColumnDef="bairro">
+        <th mat-header-cell *matHeaderCellDef> BAIRRO </th>
+        <td mat-cell *matCellDef="let element">
+            {{element.bairro}}
+        </td>
+      </ng-container>
 
-            locations.forEach((location, index) => {
-                const li = document.createElement('li');
-                li.classList.add('location-item');
-                li.innerHTML = `${location} <button onclick="deleteLocation(${index})">Excluir</button>`;
-                locationList.appendChild(li);
-            });
-        }
-    </script>
-</body>
-</html>
+      <ng-container matColumnDef="cidade">
+        <th mat-header-cell *matHeaderCellDef> CIDADE </th>
+        <td mat-cell *matCellDef="let element">
+            {{element.cidade}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+        <td mat-cell *matCellDef="let element">
+            {{element.estado}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="alteracao">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="editar(element)">
+                  <mat-icon class="icone">edit</mat-icon>
+                  <span class="textoSelecao">Editar Localização</span>
+                </button>
+                <button mat-menu-item (click)="remover(element.id_localizacao)">
+                  <mat-icon class="icone">delete</mat-icon>
+                  <span class="textoSelecao">Excluir Localização</span>
+                </button>
+              </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="colunasTabela; sticky: true"></tr>
+      <tr mat-row *matRowDef="let linhas; columns: colunasTabela;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell centered-cell" colspan="6">Não há informações</td>
+      </tr>
+
+    </table>
+
+  </section>
+
+</mat-card>

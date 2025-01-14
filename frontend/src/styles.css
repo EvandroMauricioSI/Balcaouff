@@ -20,19 +20,19 @@ input::-webkit-inner-spin-button {
 .textoValido{
     font-size: 12px;
     background-color: green!important;
-    color: white !important;;
+    color: white !important;
   }
 
   .textoInvalido{
     font-size: 12px;
     background-color: red!important;
-    color: white !important;;
+    color: white !important;
   }
 
   .textoCadastro{
     font-size: 12px;
     background-color: rgb(0, 78, 114)!important;
-    color: white !important;;
+    color: white !important;
   }
 
   .ajusteDireita{
@@ -131,3 +131,16 @@ input::-webkit-inner-spin-button {
   background: rgba(0, 0, 0, 0.4);
 }
 /*****************************/
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('/assets/fundo_projeto.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff; /* Texto branco para contraste */
+  font-family: 'Roboto', sans-serif;
+}
