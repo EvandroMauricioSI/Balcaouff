@@ -28,8 +28,8 @@ services:
       dockerfile: Dockerfile
     container_name: flask-backend
     ports:
-      #- "5000:5000"
-      - "8080:8080"
+      - "5000:5000"
+      #- "8080:8080"
     depends_on:
       psql-db:
         condition: service_healthy
