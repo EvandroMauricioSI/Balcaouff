@@ -8,7 +8,7 @@ import { AuthGuard } from './shared/guard/authguard.guard';
 
 const routes: Routes = [
 
-  {path:'',component: HomePageComponent, canActivate: [AuthGuard]},
+  {path:'home', loadChildren:()=> import('./homePage/home-page.module').then(m=> m.HomePageModule)},
   {path: 'login',component: LoginComponent},
   {path: 'perfil', loadChildren:()=> import('./myProfile/myProfile.module').then(m=> m.MyProfileModule), canActivate: [AuthGuard]},
   {path: 'meusAnuncios', loadChildren:()=> import('./myAdds/myAdds.module').then(m=> m.MyAddsModule)},

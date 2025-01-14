@@ -164,7 +164,7 @@ export class LoginComponent implements OnInit {
           //window.location.reload();
           console.log('Resposta: ', dado)
           localStorage.setItem('usuario', JSON.stringify(dado))
-          this.router.navigate(['/'])
+          this.router.navigate(['/home'])
         }
       })
     }

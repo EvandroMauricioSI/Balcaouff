@@ -17,6 +17,7 @@ import { Localizacao } from '../shared/model/localizacao';
 import { MandarEmailComponent } from './mandarEmail/mandarEmail.component';
 import { DialogGenericoComponent } from '../shared/dialogGenerico/dialogGenerico.component';
 
+
 @Component({
   selector: 'app-homePage',
   templateUrl: './homePage.component.html',

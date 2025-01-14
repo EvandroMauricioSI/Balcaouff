@@ -26,9 +26,6 @@ registerLocaleData(localePt);
   declarations: [
     AppComponent,
     LoginComponent,
-    HomePageComponent,
-    AnuncioDetalhadoComponent,
-    MandarEmailComponent,
     NavegacaoComponent
    ],
   imports: [

@@ -1,13 +1,19 @@
+import { MyAddsService } from './../myAdds/service/myAdds.service';
+import { Anunciante } from './../myProfile/model/anunciante';
+import { Subscription } from 'rxjs';
+import { SharedService } from 'src/app/shared/service/shared.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UsuarioService } from '../myProfile/service/usuario.service';
+import { Usuario } from '../shared/model/usuario';
 
 @Component({
   selector: 'app-navegacao',
   templateUrl: './navegacao.component.html',
   styleUrls: ['./navegacao.component.css']
 })
-export class NavegacaoComponent implements OnInit {
+export class NavegacaoComponent implements OnInit, AfterViewInit {
 
   opened!: boolean;
   panelOpenState = false;
@@ -18,18 +24,24 @@ export class NavegacaoComponent implements OnInit {
   showSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
-  nomeUsuario = "Clairo Cottrill"
-
-  rating: number = this.calculoRating();
+  admin!:boolean
+  //rating: number = this.calculoRating();
 
   // Criando um array de 5 estrelas
-  stars: number[] = this.criaVetor(this.calculoRating())
+  //stars: number[] = this.criaVetor(this.calculoRating())
+  user$!:Subscription
+  user!:Anunciante
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private shared: SharedService,
+    private cdr: ChangeDetectorRef,
+    private usuario: UsuarioService,
+    private add: MyAddsService
 
   ) { }
+
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -37,15 +49,26 @@ export class NavegacaoComponent implements OnInit {
       if (this.router.url === '/login') {
         this.showSidenav = false
       } else {
+        this.obtemDados()
         this.showSidenav = true
       }
     });
 
+
+  }
+
+  obtemDados(){
+    this.admin = this.shared.getAdmin()
+    this.user$ = this.usuario.listarUsuario(this.shared.getIDusuario()).subscribe(
+      (dado) => {
+        this.user	= dado
+      }
+    )
   }
 
 
   paginaInicial(){
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
 
@@ -71,9 +94,13 @@ export class NavegacaoComponent implements OnInit {
   }
 
   calculoRating(){
+    return this.add.calculoRating(this.shared.getIDusuario())
+  }
+
+  /*calculoRating(){
     const numero = 2.4527468456965 //nota baixa pq ela nao vem pro Brasil
     return parseFloat(numero.toFixed(1));
-  }
+  }*/
 
   criaVetor(tamanho:number){
     tamanho = Math.floor(tamanho)
@@ -86,11 +113,20 @@ export class NavegacaoComponent implements OnInit {
   }
 
   logoff(){
-    localStorage.removeItem('usuario')
+    localStorage.removeItem('usuario');
+    sessionStorage.clear()
+    localStorage.clear()
     this.router.navigate(['/login'])
   }
 
-
-  ngOnDestroy(): void {
+  retornaFoto(foto:string){
+    return foto ?? 'assets/placeholderUser.jpg'
   }
+
+  ngAfterViewInit() {
+    // Força uma nova detecção de mudanças após a inicialização da view
+    this.cdr.detectChanges();
+    this.admin = this.shared.getAdmin()
+  }
+
 }
